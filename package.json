@@ -1,0 +1,40 @@
+{
+  "name": "webuum",
+  "version": "0.0.2",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "eslint": "eslint",
+    "eslint-fix": "eslint --fix"
+  },
+  "devDependencies": {
+    "@stylistic/eslint-plugin": "^5.2.2",
+    "vite": "npm:rolldown-vite@latest",
+    "@webreflection/custom-elements-builtin": "^0.4.1",
+    "interestfor": "^1.0.3",
+    "invokers-polyfill": "^0.5.5"
+  },
+  "files": [
+    "index.js",
+    "src"
+  ],
+  "exports": {
+    ".": {
+      "default": "./index.js"
+    },
+    "./src/*": "./src/*",
+    "./supports": {
+      "default": "./src/supports.js"
+    },
+    "./utils": {
+      "default": "./src/utils.js"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webuum/webuum.git"
+  }
+}
