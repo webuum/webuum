@@ -14,7 +14,7 @@ export const defineCommand = (host, replacer = c => c[1].toUpperCase()) => {
   })
 }
 
-export const defineParts = (parts, host) => {
+export const defineParts = (host, parts = {}) => {
   for (let [name, selector] of Object.entries(parts)) {
     const isArray = Array.isArray(selector)
 
@@ -30,8 +30,8 @@ export const defineParts = (parts, host) => {
   }
 }
 
-export const defineValues = (values, host) => {
-  for (let [name, value] of Object.entries(values)) {
+export const defineProps = (host, props = {}) => {
+  for (let [name, value] of Object.entries(props)) {
     Object.defineProperty(host, name, {
       get: () => {
         const attribute = host.dataset[name.slice(1)]
@@ -46,18 +46,10 @@ export const defineValues = (values, host) => {
 }
 
 export const initializeController = (host) => {
-  const parts = host.constructor.parts
-  const values = host.constructor.values
-
   defineCommand(host)
 
-  if (parts) {
-    defineParts(parts, host)
-  }
-
-  if (values) {
-    defineValues(values, host)
-  }
+  defineParts(host, host.constructor.parts)
+  defineProps(host, host.constructor.props)
 }
 
 export class WebuumElement extends HTMLElement {
