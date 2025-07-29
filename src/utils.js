@@ -7,11 +7,11 @@ export const typecast = (value) => {
   }
 }
 
-export const partSelector = (name, selector, nodeName) => (
-  `[data-${nodeName}-part~="${selector?.length > 0 ? selector : name.slice(1)}"]`
+export const partSelector = (name, selector, tagName) => (
+  `[${tagName ? `data-${tagName}-` : ''}part~="${selector?.length > 0 ? selector : name.slice(1)}"]`
 )
 
 export const querySelector = (host, selector) =>
   [...host.querySelectorAll(selector)].filter(
-    node => node.closest(host.nodeName) === host,
+    node => !host.tagName || node.closest(host.tagName) === host,
   )

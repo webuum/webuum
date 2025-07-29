@@ -16,15 +16,13 @@ export const defineCommand = (host, replacer = c => c[1].toUpperCase()) => {
 
 export const defineParts = (host, parts = {}) => {
   for (let [name, selector] of Object.entries(parts)) {
-    const isArray = Array.isArray(selector)
+    selector = partSelector(name, selector, host.tagName)
 
-    selector = partSelector(name, isArray ? selector[0] : selector, host.nodeName)
-
-    Object.defineProperty(host, name, {
+    Object.defineProperty(host?.host ?? host, name, {
       get: () => {
         const queryPart = querySelector(host, selector)
 
-        return isArray ? queryPart : queryPart[0] || null
+        return queryPart?.length > 1 ? queryPart : queryPart?.[0] || null
       },
     })
   }

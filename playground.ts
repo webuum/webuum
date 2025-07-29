@@ -18,15 +18,21 @@ customElements.define('x-test', class extends WebuumElement {
 
 customElements.define('x-hello', class extends HTMLElement {
   declare $foo: HTMLElement | null
+  declare $fuu: HTMLElement | null
   declare $buu: string
 
   constructor() {
     super()
+    this.attachShadow({ mode: "open" });
 
     defineCommand(this)
 
     defineParts(this, {
-      $foo: null,
+      $foo: 'maja',
+    })
+
+    defineParts(this.shadowRoot, {
+      $fuu: 'maja',
     })
 
     defineProps(this, {
@@ -36,10 +42,10 @@ customElements.define('x-hello', class extends HTMLElement {
 
 
   connectedCallback() {
-    console.dir(this)
+    this.shadowRoot.innerHTML = `<div part="maja"><slot></slot></div>`
 
     this.$buu = 'test2'
 
-    console.log(this.$foo, this.$buu)
+    console.log(this.$foo, this.$fuu)
   }
 })
