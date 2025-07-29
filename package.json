@@ -19,6 +19,7 @@
   },
   "files": [
     "index.js",
+    "polyfill.js",
     "src"
   ],
   "exports": {
@@ -26,6 +27,9 @@
       "default": "./index.js"
     },
     "./src/*": "./src/*",
+    "./polyfill": {
+      "default": "./src/polyfill.js"
+    },
     "./supports": {
       "default": "./src/supports.js"
     },
