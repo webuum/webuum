@@ -1,4 +1,6 @@
 export const typecast = (value) => {
+  if (!isNaN(value)) return +value
+
   try {
     return JSON.parse(value)
   }
