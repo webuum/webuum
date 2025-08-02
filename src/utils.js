@@ -12,13 +12,17 @@ export const typecast = (value) => {
   }
 }
 
-export const partSelector = (name, selector, tagName) => (
-  `[${tagName ? `data-${tagName}-` : ''}part~="${selector?.length > 0 ? selector : name.slice(1)}"]`
+export const localName = (host) => {
+  return host?.getAttribute?.('is') || host?.localName
+}
+
+export const partSelector = (name, selector, localName) => (
+  `[${localName ? `data-${localName}-` : ''}part~="${selector?.length > 0 ? selector : name.slice(1)}"]`
 )
 
-export const querySelector = (host, selector) =>
+export const querySelector = (host, selector, localName) =>
   [...host.querySelectorAll(selector)].filter(
-    node => !host.tagName || node.closest(host.tagName) === host,
+    node => !host.localName || node.closest(`${localName}, [is=${localName}]`) === host,
   )
 
 export const nodeCallback = (nodes, selector, host, callback) => {
@@ -33,7 +37,7 @@ export const nodeCallback = (nodes, selector, host, callback) => {
 
 export const partsMutationCallback = (host, parts, { addedNodes, removedNodes }) => {
   for (let [name, selector] of Object.entries(parts)) {
-    selector = partSelector(name, selector, host.tagName)
+    selector = partSelector(name, selector, localName(host))
 
     nodeCallback(addedNodes, selector, host?.host ?? host, `${name}ConnectedCallback`)
     nodeCallback(removedNodes, selector, host?.host ?? host, `${name}DisconnectedCallback`)

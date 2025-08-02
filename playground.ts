@@ -24,7 +24,7 @@ customElements.define('x-test', class extends WebuumElement {
   }
 })
 
-customElements.define('x-hello', class extends HTMLElement {
+customElements.define('x-hello', class extends HTMLDivElement {
   declare $foo: HTMLElement | null
   declare $fuu: HTMLElement | null
   declare $buu: string
@@ -59,8 +59,6 @@ customElements.define('x-hello', class extends HTMLElement {
     this.shadowRoot.innerHTML = `<div part="maja"><slot></slot></div>`
 
     this.$buu = 'test2'
-
-    // console.log(this.$foo, this.$fuu)
   }
 
   $fooConnectedCallback(element) {
@@ -70,4 +68,4 @@ customElements.define('x-hello', class extends HTMLElement {
   $fuuConnectedCallback(element) {
     console.log('connected', element)
   }
-})
+}, { extends: 'div' })
