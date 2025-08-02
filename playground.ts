@@ -1,4 +1,4 @@
-import {defineCommand, defineParts, defineProps, WebuumElement} from './index.js'
+import { defineCommand, defineParts, definePartsObserver, defineProps, WebuumElement } from './index.js'
 
 customElements.define('x-test', class extends WebuumElement {
   declare $foo: HTMLElement | null
@@ -14,6 +14,14 @@ customElements.define('x-test', class extends WebuumElement {
   connectedCallback() {
     console.dir(this.$foo)
   }
+
+  $fooConnectedCallback(element) {
+    console.log('connected', element)
+  }
+
+  $fooDisconnectedCallback(element) {
+    console.log('disconnected', element)
+  }
 })
 
 customElements.define('x-hello', class extends HTMLElement {
@@ -21,19 +29,25 @@ customElements.define('x-hello', class extends HTMLElement {
   declare $fuu: HTMLElement | null
   declare $buu: string
 
+  declare $parts: object
+  declare $shadowParts: object
+
   constructor() {
     super()
     this.attachShadow({ mode: "open" });
 
     defineCommand(this)
 
-    defineParts(this, {
+    this.$parts = defineParts(this, {
       $foo: 'maja',
     })
 
-    defineParts(this.shadowRoot, {
+    this.$shadowParts = defineParts(this.shadowRoot, {
       $fuu: 'maja',
     })
+
+    definePartsObserver(this, this.$parts)
+    definePartsObserver(this.shadowRoot, this.$shadowParts)
 
     defineProps(this, {
       $buu: 'test',
@@ -46,6 +60,14 @@ customElements.define('x-hello', class extends HTMLElement {
 
     this.$buu = 'test2'
 
-    console.log(this.$foo, this.$fuu)
+    // console.log(this.$foo, this.$fuu)
+  }
+
+  $fooConnectedCallback(element) {
+    console.log('connected', element)
+  }
+
+  $fuuConnectedCallback(element) {
+    console.log('connected', element)
   }
 })

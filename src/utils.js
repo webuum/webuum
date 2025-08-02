@@ -20,3 +20,22 @@ export const querySelector = (host, selector) =>
   [...host.querySelectorAll(selector)].filter(
     node => !host.tagName || node.closest(host.tagName) === host,
   )
+
+export const nodeCallback = (nodes, selector, host, callback) => {
+  if (!nodes) return
+
+  nodes.forEach((node) => {
+    if (node.matches(selector)) {
+      host?.[callback]?.(node)
+    }
+  })
+}
+
+export const partsMutationCallback = (host, parts, { addedNodes, removedNodes }) => {
+  for (let [name, selector] of Object.entries(parts)) {
+    selector = partSelector(name, selector, host.tagName)
+
+    nodeCallback(addedNodes, selector, host?.host ?? host, `${name}ConnectedCallback`)
+    nodeCallback(removedNodes, selector, host?.host ?? host, `${name}DisconnectedCallback`)
+  }
+}

@@ -1,4 +1,4 @@
-import { partSelector, querySelector, typecast } from './src/utils.js'
+import { partSelector, partsMutationCallback, querySelector, typecast } from './src/utils.js'
 
 export const defineCommand = (host, replacer = c => c[1].toUpperCase()) => {
   host.addEventListener('command', (e) => {
@@ -26,6 +26,27 @@ export const defineParts = (host, parts = {}) => {
       },
     })
   }
+
+  return parts
+}
+
+export const definePartsObserver = (host, parts = {}) => {
+  const observer = new MutationObserver((mutationList) => {
+    for (const mutation of mutationList) {
+      if (mutation.type !== 'childList') return
+
+      partsMutationCallback(host, parts, mutation)
+    }
+  })
+
+  partsMutationCallback(host, parts, {
+    addedNodes: host.querySelectorAll(`[${host.tagName ? `data-${host.tagName}-` : ''}part]`),
+  })
+
+  observer.observe(host, {
+    childList: true,
+    subtree: true,
+  })
 }
 
 export const defineProps = (host, props = {}) => {
@@ -41,6 +62,8 @@ export const defineProps = (host, props = {}) => {
       },
     })
   }
+
+  return props
 }
 
 export const initializeController = (host) => {
@@ -48,6 +71,8 @@ export const initializeController = (host) => {
 
   defineParts(host, host.constructor.parts)
   defineProps(host, host.constructor.props)
+
+  definePartsObserver(host, host.constructor.parts)
 }
 
 export class WebuumElement extends HTMLElement {
