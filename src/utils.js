@@ -1,6 +1,8 @@
 export const typecast = (value) => {
-  if (!isNaN(value)) return +value
-  if (!/^(true|false|null)$|^[[{]/.test(value.trim())) return value
+  const trim = value?.trim()
+
+  if (!isNaN(trim) && trim) return +value
+  if (!/^(true|false|null)$|^[[{]/.test(trim)) return value
 
   try {
     return JSON.parse(value)
