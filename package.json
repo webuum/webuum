@@ -19,7 +19,6 @@
   },
   "files": [
     "index.js",
-    "polyfill.js",
     "src"
   ],
   "exports": {

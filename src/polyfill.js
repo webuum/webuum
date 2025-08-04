@@ -1,4 +1,4 @@
-import { supportsCommand, supportsInterest, supportsIs } from './src/supports.js'
+import { supportsCommand, supportsInterest, supportsIs } from './supports.js'
 
 if (!supportsIs()) {
   await import('@webreflection/custom-elements-builtin')

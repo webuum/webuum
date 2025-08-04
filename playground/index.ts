@@ -1,4 +1,4 @@
-import { defineCommand, defineParts, definePartsObserver, defineProps, WebuumElement } from './index.js'
+import { defineCommand, defineParts, definePartsObserver, defineProps, WebuumElement } from '../index.js'
 
 customElements.define('x-test', class extends WebuumElement {
   declare $foo: HTMLElement | null

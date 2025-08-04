@@ -1,4 +1,4 @@
-import { localName, partSelector, partsMutationCallback, querySelector, typecast } from './src/utils.js'
+import { getLocalName, getPartSelector, partsMutationCallback, querySelector, typecast } from './src/utils.js'
 
 export const defineCommand = (host, replacer = c => c[1].toUpperCase()) => {
   host.addEventListener('command', (e) => {
@@ -15,12 +15,14 @@ export const defineCommand = (host, replacer = c => c[1].toUpperCase()) => {
 }
 
 export const defineParts = (host, parts = {}) => {
+  const localName = getLocalName(host)
+
   for (let [name, selector] of Object.entries(parts)) {
-    selector = partSelector(name, selector, localName(host))
+    selector = getPartSelector(name, selector, localName)
 
     Object.defineProperty(host?.host ?? host, name, {
       get: () => {
-        const queryPart = querySelector(host, selector, localName(host))
+        const queryPart = querySelector(host, selector, localName)
 
         return queryPart?.length > 1 ? queryPart : queryPart?.[0] || null
       },
@@ -40,7 +42,7 @@ export const definePartsObserver = (host, parts = {}) => {
   })
 
   partsMutationCallback(host, parts, {
-    addedNodes: host.querySelectorAll(`[${host.localName ? `data-${localName(host?.host ?? host)}-` : ''}part]`),
+    addedNodes: host.querySelectorAll(`[${host.localName ? `data-${getLocalName(host?.host ?? host)}-` : ''}part]`),
   })
 
   observer.observe(host, {
