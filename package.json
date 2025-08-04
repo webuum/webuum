@@ -1,6 +1,6 @@
 {
   "name": "webuum",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "type": "module",
   "main": "index.js",
   "scripts": {
@@ -12,10 +12,10 @@
   },
   "devDependencies": {
     "@stylistic/eslint-plugin": "^5.2.2",
-    "vite": "npm:rolldown-vite@latest",
     "@webreflection/custom-elements-builtin": "^0.4.1",
     "interestfor": "^1.0.3",
-    "invokers-polyfill": "^0.5.5"
+    "invokers-polyfill": "^0.5.5",
+    "vite": "npm:rolldown-vite@latest"
   },
   "files": [
     "index.js",
