@@ -8,7 +8,7 @@
   <a href="https://nodejs.org/en/about/releases/"><img src="https://img.shields.io/node/v/webuum.svg" alt="node compatility"></a>
 </p>
 
-# 🎨 [Webuum](https://webuum.dev)
+# [Webuum](https://webuum.dev)
 
 When the platform is 95% of what you need.
 Made for websites — not web apps.
