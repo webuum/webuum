@@ -1,4 +1,11 @@
-import { defineCommand, defineParts, definePartsObserver, defineProps, WebuumElement } from '../index.js'
+import {
+    defineCommand,
+    defineParts,
+    definePartsObserver,
+    defineProps,
+    defineShadowCommand,
+    WebuumElement
+} from '../index.js'
 
 customElements.define('x-test', class extends WebuumElement {
   declare $foo: HTMLElement | null
@@ -56,9 +63,15 @@ customElements.define('x-hello', class extends HTMLDivElement {
 
 
   connectedCallback() {
-    this.shadowRoot.innerHTML = `<div part="maja"><slot></slot></div>`
+    this.shadowRoot.innerHTML = `<div part="maja"><slot></slot><button command="--test">Test</button></div>`
+
+    defineShadowCommand(this)
 
     this.$buu = 'test2'
+  }
+
+  test() {
+      console.log('test')
   }
 
   $fooConnectedCallback(element) {

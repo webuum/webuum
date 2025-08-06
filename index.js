@@ -14,6 +14,12 @@ export const defineCommand = (host, replacer = c => c[1].toUpperCase()) => {
   })
 }
 
+export const defineShadowCommand = (host) => {
+  host?.shadowRoot?.querySelectorAll('[command]').forEach((element) => {
+    if (!element.commandForElement) element.commandForElement = host
+  })
+}
+
 export const defineParts = (host, parts = {}) => {
   const localName = getLocalName(host)
 
