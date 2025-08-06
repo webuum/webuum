@@ -38,7 +38,6 @@ const nodeCallback = (nodes, host, selector, callback) => {
 
 export const partsMutationCallback = (host, parts, { addedNodes, removedNodes } = {}) => {
   const localName = getLocalName(host)
-  const root = host?.host ?? host
   const methods = ['Connected', 'Disconnected']
 
   addedNodes ??= querySelector(host, `[${localName ? `data-${localName}-` : ''}part]`)
@@ -47,8 +46,8 @@ export const partsMutationCallback = (host, parts, { addedNodes, removedNodes } 
     selector = getPartSelector(name, selector, localName)
 
     methods.forEach((state, index) =>
-      nodeCallback(index ? removedNodes : addedNodes, root, selector, element =>
-        root?.[`${name}${state}Callback`]?.(element),
+      nodeCallback(index ? removedNodes : addedNodes, host, selector, element =>
+        (host?.host ?? host)?.[`${name}${state}Callback`]?.(element),
       ),
     )
   }

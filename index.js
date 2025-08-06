@@ -40,20 +40,18 @@ export const defineParts = (host, parts = {}) => {
 }
 
 export const defineHostObserver = (host, callback, arg) => {
-  const observer = new MutationObserver((mutationList) => {
+  new MutationObserver((mutationList) => {
     for (const mutation of mutationList) {
       if (mutation.type !== 'childList') return
 
       callback(...arg, mutation)
     }
-  })
-
-  callback(...arg)
-
-  observer.observe(host, {
+  }).observe(host, {
     childList: true,
     subtree: true,
   })
+
+  callback(...arg)
 }
 
 export const definePartsObserver = (host, parts = {}) => {
