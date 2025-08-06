@@ -1,9 +1,8 @@
 import {
-    defineCommand,
+    defineCommand, defineCommandObserver,
     defineParts,
     definePartsObserver,
     defineProps,
-    defineShadowCommand,
     WebuumElement
 } from '../index.js'
 
@@ -44,6 +43,7 @@ customElements.define('x-hello', class extends HTMLDivElement {
     this.attachShadow({ mode: "open" });
 
     defineCommand(this)
+    defineCommandObserver(this.shadowRoot)
 
     this.$parts = defineParts(this, {
       $foo: 'maja',
@@ -63,9 +63,7 @@ customElements.define('x-hello', class extends HTMLDivElement {
 
 
   connectedCallback() {
-    this.shadowRoot.innerHTML = `<div part="maja"><slot></slot><button command="--test">Test</button></div>`
-
-    defineShadowCommand(this)
+    this.shadowRoot.innerHTML = `<div><div part="maja"><slot></slot><button command="--test">Test</button></div></div>`
 
     this.$buu = 'test2'
   }
@@ -75,10 +73,10 @@ customElements.define('x-hello', class extends HTMLDivElement {
   }
 
   $fooConnectedCallback(element) {
-    console.log('connected', element)
+    console.log('foo connected', element)
   }
 
   $fuuConnectedCallback(element) {
-    console.log('connected', element)
+    console.log('fuu connected', element)
   }
 }, { extends: 'div' })

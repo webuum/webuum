@@ -32,11 +32,16 @@ export const nodeCallback = (nodes, selector, host, callback) => {
     if (node.matches(selector)) {
       host?.[callback]?.(node)
     }
+    node.querySelectorAll(selector).forEach((element) => {
+      host?.[callback]?.(element)
+    })
   })
 }
 
-export const partsMutationCallback = (host, parts, { addedNodes, removedNodes }) => {
+export const partsMutationCallback = (host, parts, { addedNodes, removedNodes } = {}) => {
   const localName = getLocalName(host)
+
+  addedNodes ??= host.querySelectorAll(`[${host.localName ? `data-${getLocalName(host?.host ?? host)}-` : ''}part]`)
 
   for (let [name, selector] of Object.entries(parts)) {
     selector = getPartSelector(name, selector, localName)
@@ -44,4 +49,24 @@ export const partsMutationCallback = (host, parts, { addedNodes, removedNodes })
     nodeCallback(addedNodes, selector, host?.host ?? host, `${name}ConnectedCallback`)
     nodeCallback(removedNodes, selector, host?.host ?? host, `${name}DisconnectedCallback`)
   }
+}
+
+export const commandMutationCallback = (host, { addedNodes } = {}) => {
+  const selector = '[command]'
+
+  addedNodes ??= host.querySelectorAll(selector)
+
+  const callback = (element) => {
+    if (!element.command) return
+    if (!element.commandForElement) element.commandForElement = host?.host ?? host
+  }
+
+  addedNodes.forEach((node) => {
+    if (node.matches(selector)) {
+      callback(node)
+    }
+    node.querySelectorAll(selector).forEach((element) => {
+      callback(element)
+    })
+  })
 }

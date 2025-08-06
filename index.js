@@ -1,4 +1,11 @@
-import { getLocalName, getPartSelector, partsMutationCallback, querySelector, typecast } from './src/utils.js'
+import {
+  commandMutationCallback,
+  getLocalName,
+  getPartSelector,
+  partsMutationCallback,
+  querySelector,
+  typecast,
+} from './src/utils.js'
 
 export const defineCommand = (host, replacer = c => c[1].toUpperCase()) => {
   host.addEventListener('command', (e) => {
@@ -11,12 +18,6 @@ export const defineCommand = (host, replacer = c => c[1].toUpperCase()) => {
       .replace(/(-\w)/g, replacer)
 
     if (method in host) host[method](e)
-  })
-}
-
-export const defineShadowCommand = (host) => {
-  host?.shadowRoot?.querySelectorAll('[command]').forEach((element) => {
-    if (!element.commandForElement) element.commandForElement = host
   })
 }
 
@@ -38,23 +39,29 @@ export const defineParts = (host, parts = {}) => {
   return parts
 }
 
-export const definePartsObserver = (host, parts = {}) => {
+export const defineHostObserver = (host, callback, arg) => {
   const observer = new MutationObserver((mutationList) => {
     for (const mutation of mutationList) {
       if (mutation.type !== 'childList') return
 
-      partsMutationCallback(host, parts, mutation)
+      callback(...arg, mutation)
     }
   })
 
-  partsMutationCallback(host, parts, {
-    addedNodes: host.querySelectorAll(`[${host.localName ? `data-${getLocalName(host?.host ?? host)}-` : ''}part]`),
-  })
+  callback(...arg)
 
   observer.observe(host, {
     childList: true,
     subtree: true,
   })
+}
+
+export const definePartsObserver = (host, parts = {}) => {
+  defineHostObserver(host, partsMutationCallback, [host, parts])
+}
+
+export const defineCommandObserver = (host) => {
+  defineHostObserver(host, commandMutationCallback, [host])
 }
 
 export const defineProps = (host, props = {}) => {
@@ -76,11 +83,12 @@ export const defineProps = (host, props = {}) => {
 
 export const initializeController = (host) => {
   defineCommand(host)
+  defineCommandObserver(host)
 
   defineParts(host, host.constructor.parts)
-  defineProps(host, host.constructor.props)
-
   definePartsObserver(host, host.constructor.parts)
+
+  defineProps(host, host.constructor.props)
 }
 
 export class WebuumElement extends HTMLElement {
