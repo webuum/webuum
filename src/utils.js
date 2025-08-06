@@ -17,56 +17,50 @@ export const getLocalName = (host) => {
 }
 
 export const getPartSelector = (name, selector, localName) => (
-  `[${localName ? `data-${localName}-` : ''}part~="${selector?.length > 0 ? selector : name.slice(1)}"]`
+  `[${localName ? `data-${localName}-` : ''}part~="${selector ? selector : name.slice(1)}"]`
 )
 
-export const querySelector = (host, selector, localName) =>
-  [...host.querySelectorAll(selector)].filter(
-    node => !host.localName || node.closest(`${localName}, [is=${localName}]`) === host,
+export const querySelector = (node, selector, host = node) => {
+  const localName = getLocalName(host)
+
+  return [...node.querySelectorAll(selector)].filter(
+    element => !host.host || element.closest(`${localName}, [is=${localName}]`) === host,
   )
+}
 
-export const nodeCallback = (nodes, selector, host, callback) => {
-  if (!nodes) return
-
-  nodes.forEach((node) => {
-    if (node.matches(selector)) {
-      host?.[callback]?.(node)
-    }
-    node.querySelectorAll(selector).forEach((element) => {
-      host?.[callback]?.(element)
-    })
+const nodeCallback = (nodes, host, selector, callback) => {
+  nodes?.forEach((node) => {
+    [node, ...querySelector(node, selector, host?.host ?? host)]
+      .filter(element => element.matches(selector))
+      .forEach(callback)
   })
 }
 
 export const partsMutationCallback = (host, parts, { addedNodes, removedNodes } = {}) => {
   const localName = getLocalName(host)
+  const root = host?.host ?? host
+  const methods = ['Connected', 'Disconnected']
 
-  addedNodes ??= host.querySelectorAll(`[${host.localName ? `data-${getLocalName(host?.host ?? host)}-` : ''}part]`)
+  addedNodes ??= querySelector(host, `[${localName ? `data-${localName}-` : ''}part]`)
 
   for (let [name, selector] of Object.entries(parts)) {
     selector = getPartSelector(name, selector, localName)
 
-    nodeCallback(addedNodes, selector, host?.host ?? host, `${name}ConnectedCallback`)
-    nodeCallback(removedNodes, selector, host?.host ?? host, `${name}DisconnectedCallback`)
+    methods.forEach((state, index) =>
+      nodeCallback(index ? removedNodes : addedNodes, root, selector, element =>
+        root?.[`${name}${state}Callback`]?.(element),
+      ),
+    )
   }
 }
 
 export const commandMutationCallback = (host, { addedNodes } = {}) => {
   const selector = '[command]'
 
-  addedNodes ??= host.querySelectorAll(selector)
+  addedNodes ??= querySelector(host, selector)
 
-  const callback = (element) => {
+  nodeCallback(addedNodes, host, selector, (element) => {
     if (!element.command) return
     if (!element.commandForElement) element.commandForElement = host?.host ?? host
-  }
-
-  addedNodes.forEach((node) => {
-    if (node.matches(selector)) {
-      callback(node)
-    }
-    node.querySelectorAll(selector).forEach((element) => {
-      callback(element)
-    })
   })
 }

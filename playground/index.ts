@@ -18,7 +18,7 @@ customElements.define('x-test', class extends WebuumElement {
   }
 
   connectedCallback() {
-    console.dir(this.$foo)
+    console.log('part', this.$foo)
   }
 
   $fooConnectedCallback(element) {

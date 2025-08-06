@@ -29,7 +29,7 @@ export const defineParts = (host, parts = {}) => {
 
     Object.defineProperty(host?.host ?? host, name, {
       get: () => {
-        const queryPart = querySelector(host, selector, localName)
+        const queryPart = querySelector(host, selector)
 
         return queryPart?.length > 1 ? queryPart : queryPart?.[0] || null
       },
