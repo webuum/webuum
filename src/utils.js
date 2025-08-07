@@ -30,9 +30,8 @@ export const querySelector = (node, selector, host = node) => {
 
 const nodeCallback = (nodes, host, selector, callback) => {
   nodes?.forEach((node) => {
-    [node, ...querySelector(node, selector, host?.host ?? host)]
-      .filter(element => element.matches(selector))
-      .forEach(callback)
+    if (node.matches?.(selector)) callback(node)
+    querySelector(node, selector, host?.host ?? host).forEach(callback)
   })
 }
 

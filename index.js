@@ -42,9 +42,7 @@ export const defineParts = (host, parts = {}) => {
 export const defineHostObserver = (host, callback, arg) => {
   new MutationObserver((mutationList) => {
     for (const mutation of mutationList) {
-      if (mutation.type !== 'childList') return
-
-      callback(...arg, mutation)
+      if (mutation.type === 'childList') callback(...arg, mutation)
     }
   }).observe(host, {
     childList: true,
@@ -64,14 +62,16 @@ export const defineCommandObserver = (host) => {
 
 export const defineProps = (host, props = {}) => {
   for (let [name, value] of Object.entries(props)) {
+    const key = name.slice(1)
+
     Object.defineProperty(host, name, {
       get: () => {
-        const attribute = host.dataset[name.slice(1)]
+        const attribute = host.dataset[key]
 
         return attribute ? typecast(attribute) : value
       },
       set: (value) => {
-        host.dataset[name.slice(1)] = value
+        host.dataset[key] = value
       },
     })
   }
