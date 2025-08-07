@@ -14,7 +14,7 @@
     "@stylistic/eslint-plugin": "^5.2.2",
     "@webreflection/custom-elements-builtin": "^0.4.1",
     "interestfor": "^1.0.3",
-    "invokers-polyfill": "^0.5.5",
+    "invokers-polyfill": "^0.5.6",
     "vite": "npm:rolldown-vite@latest"
   },
   "files": [

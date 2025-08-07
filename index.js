@@ -90,13 +90,16 @@ export const defineProps = (host, props = {}) => {
 // }
 
 export const initializeController = (host) => {
+  const parts = host.constructor.part
+  const props = host.constructor.props
+
   defineCommand(host)
   defineCommandObserver(host)
 
-  defineParts(host, host.constructor.parts)
-  definePartsObserver(host, host.constructor.parts)
+  defineParts(host, parts)
+  definePartsObserver(host, parts)
 
-  defineProps(host, host.constructor.props)
+  defineProps(host, props)
 
   // defineDispatch(host)
 }
