@@ -31,7 +31,7 @@ export const defineParts = (host, parts = {}) => {
       get: () => {
         const queryPart = querySelector(host, selector)
 
-        return queryPart?.length > 1 ? queryPart : queryPart?.[0] || null
+        return queryPart?.[1] ? queryPart : queryPart?.[0] || null
       },
     })
   }
