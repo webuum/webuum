@@ -17,6 +17,8 @@ customElements.define('x-test', class extends WebuumElement {
     $buu: 'test',
   }
 
+  static dispatches = ['test']
+
   connectedCallback() {
     console.log('part', this.$foo)
   }
@@ -59,6 +61,8 @@ customElements.define('x-hello', class extends HTMLDivElement {
     defineProps(this, {
       $buu: 'test',
     })
+
+    // defineDispatch(this)
   }
 
 
@@ -66,10 +70,19 @@ customElements.define('x-hello', class extends HTMLDivElement {
     this.shadowRoot.innerHTML = `<div><div part="maja"><slot></slot><button command="--test">Test</button></div></div>`
 
     this.$buu = 'test2'
+
+      this.addEventListener('x-hello:muhehe', (e) => {
+          console.log(e)
+      })
   }
 
   test() {
       console.log('test')
+      this?.$dispatch?.('muhehe', {
+          detail: {
+              test: 'test'
+          }
+      })
   }
 
   $fooConnectedCallback(element) {

@@ -79,6 +79,16 @@ export const defineProps = (host, props = {}) => {
   return props
 }
 
+// export const defineDispatch = (host) => {
+//   host = host?.host ?? host
+//
+//   const localName = getLocalName(host)
+//
+//   host.$dispatch = (name, options = {}) => {
+//     host.dispatchEvent(new CustomEvent(`${localName}:${name}`, { bubbles: true, cancelable: true, ...options }))
+//   }
+// }
+
 export const initializeController = (host) => {
   defineCommand(host)
   defineCommandObserver(host)
@@ -87,6 +97,8 @@ export const initializeController = (host) => {
   definePartsObserver(host, host.constructor.parts)
 
   defineProps(host, host.constructor.props)
+
+  // defineDispatch(host)
 }
 
 export class WebuumElement extends HTMLElement {
