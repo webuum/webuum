@@ -7,6 +7,11 @@ import {
   typecast,
 } from './src/utils.js'
 
+/**
+ * @param {HTMLElement | ShadowRoot} host
+ * @param {(match: string) => string} [replacer]
+ * @returns {void}
+ */
 export const defineCommand = (host, replacer = c => c[1].toUpperCase()) => {
   host.addEventListener('command', (e) => {
     e.preventDefault()
@@ -21,6 +26,11 @@ export const defineCommand = (host, replacer = c => c[1].toUpperCase()) => {
   })
 }
 
+/**
+ * @param {HTMLElement | ShadowRoot} host
+ * @param {Record<string, string | null>} [parts={}]
+ * @returns {Record<string, string | null>}
+ */
 export const defineParts = (host, parts = {}) => {
   const localName = getLocalName(host)
 
@@ -39,6 +49,13 @@ export const defineParts = (host, parts = {}) => {
   return parts
 }
 
+/**
+ * @template {any[]} T
+ * @param {HTMLElement | ShadowRoot} host
+ * @param {(...args: [...T, MutationRecord?]) => void} callback
+ * @param {T} arg
+ * @returns {void}
+ */
 export const defineHostObserver = (host, callback, arg) => {
   new MutationObserver((mutationList) => {
     for (const mutation of mutationList) {
@@ -52,14 +69,28 @@ export const defineHostObserver = (host, callback, arg) => {
   callback(...arg)
 }
 
+/**
+ * @param {HTMLElement | ShadowRoot} host
+ * @param {Record<string, string | null>} [parts={}]
+ * @returns {void}
+ */
 export const definePartsObserver = (host, parts = {}) => {
   defineHostObserver(host, partsMutationCallback, [host, parts])
 }
 
+/**
+ * @param {HTMLElement | ShadowRoot} host
+ * @returns {void}
+ */
 export const defineCommandObserver = (host) => {
   defineHostObserver(host, commandMutationCallback, [host])
 }
 
+/**
+ * @param {HTMLElement} host
+ * @param {Record<string, unknown>} [props={}]
+ * @returns {Record<string, unknown>}
+ */
 export const defineProps = (host, props = {}) => {
   for (let [name, value] of Object.entries(props)) {
     const key = name.slice(1)
@@ -79,19 +110,13 @@ export const defineProps = (host, props = {}) => {
   return props
 }
 
-// export const defineDispatch = (host) => {
-//   host = host?.host ?? host
-//
-//   const localName = getLocalName(host)
-//
-//   host.$dispatch = (name, options = {}) => {
-//     host.dispatchEvent(new CustomEvent(`${localName}:${name}`, { bubbles: true, cancelable: true, ...options }))
-//   }
-// }
-
+/**
+ * @param {HTMLElement} host
+ * @returns {void}
+ */
 export const initializeController = (host) => {
-  const parts = host.constructor.part
-  const props = host.constructor.props
+  const parts = /** @type {{parts?: Record<string, string | null>}} */host.constructor?.parts
+  const props = /** @type {{props?: Record<string, unknown>}} */host.constructor.props
 
   defineCommand(host)
   defineCommandObserver(host)
@@ -100,10 +125,11 @@ export const initializeController = (host) => {
   definePartsObserver(host, parts)
 
   defineProps(host, props)
-
-  // defineDispatch(host)
 }
 
+/**
+ * @augments {HTMLElement}
+ */
 export class WebuumElement extends HTMLElement {
   constructor() {
     super()

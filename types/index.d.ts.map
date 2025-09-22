@@ -1,0 +1,35 @@
+{
+	"version": 3,
+	"file": "index.d.ts",
+	"names": [
+		"defineCommand",
+		"defineParts",
+		"defineHostObserver",
+		"definePartsObserver",
+		"defineCommandObserver",
+		"defineProps",
+		"initializeController",
+		"WebuumElement",
+		"supportsCommand",
+		"supportsInterest",
+		"supportsIs",
+		"typecast",
+		"getLocalName",
+		"getPartSelector",
+		"querySelector",
+		"partsMutationCallback",
+		"commandMutationCallback"
+	],
+	"sources": [
+		"../index.js",
+		"../src/supports.js",
+		"../src/utils.js"
+	],
+	"sourcesContent": [
+		null,
+		null,
+		null
+	],
+	"mappings": ";iBAcaA,aAAaA;iBAmBbC,WAAWA;iBAyBXC,kBAAkBA;iBAkBlBC,mBAAmBA;iBAQnBC,qBAAqBA;iBASrBC,WAAWA;iBAuBXC,oBAAoBA;;cAgBpBC,aAAaA;;;;;;;cCjIbC,eAAeA;;cAMfC,gBAAgBA;iBAQhBC,UAAUA;;;;;;iBCbVC,QAAQA;iBAkBRC,YAAYA;iBAUZC,eAAeA;iBAUfC,aAAaA;iBA0BbC,qBAAqBA;;;;iBAsBrBC,uBAAuBA",
+	"ignoreList": []
+}

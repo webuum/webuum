@@ -1,3 +1,7 @@
+/**
+ * @param {string} value
+ * @returns {unknown}
+ */
 export const typecast = (value) => {
   const trim = value?.trim()
 
@@ -12,14 +16,30 @@ export const typecast = (value) => {
   }
 }
 
+/**
+ * @param {HTMLElement} host
+ * @returns {string}
+ */
 export const getLocalName = (host) => {
   return host?.getAttribute?.('is') || host?.localName
 }
 
+/**
+ * @param {string} name
+ * @param {string} selector
+ * @param {string} localName
+ * @returns {string}
+ */
 export const getPartSelector = (name, selector, localName) => (
   `[${localName ? `data-${localName}-` : ''}part~="${selector || name.slice(1)}"]`
 )
 
+/**
+ * @param {HTMLElement | ShadowRoot} node
+ * @param {string} selector
+ * @param {HTMLElement | ShadowRoot} host
+ * @returns {Element[]}
+ */
 export const querySelector = (node, selector, host = node) => {
   const localName = getLocalName(host)
 
@@ -28,6 +48,12 @@ export const querySelector = (node, selector, host = node) => {
   )
 }
 
+/**
+ * @param {NodeList} nodes
+ * @param {HTMLElement | ShadowRoot} host
+ * @param {string} selector
+ * @param {(element: Element) => void} callback
+ */
 const nodeCallback = (nodes, host, selector, callback) => {
   nodes?.forEach((node) => {
     if (node.matches?.(selector)) callback(node)
@@ -35,6 +61,11 @@ const nodeCallback = (nodes, host, selector, callback) => {
   })
 }
 
+/**
+ * @param {HTMLElement | ShadowRoot} host
+ * @param {Record<string, string | null>} parts
+ * @param {{addedNodes?: Element[], removedNodes?: Element[]}} param2
+ */
 export const partsMutationCallback = (host, parts, { addedNodes, removedNodes } = {}) => {
   const localName = getLocalName(host)
 
@@ -53,6 +84,10 @@ export const partsMutationCallback = (host, parts, { addedNodes, removedNodes } 
   }
 }
 
+/**
+ * @param {HTMLElement | ShadowRoot} host
+ * @param {{addedNodes?: Element[]}} param1
+ */
 export const commandMutationCallback = (host, { addedNodes } = {}) => {
   const selector = '[command]'
 

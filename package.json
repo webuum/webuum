@@ -1,6 +1,6 @@
 {
   "name": "webuum",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "type": "module",
   "main": "index.js",
   "scripts": {
@@ -8,13 +8,16 @@
     "build": "vite build",
     "preview": "vite preview",
     "eslint": "eslint",
-    "eslint-fix": "eslint --fix"
+    "eslint-fix": "eslint --fix",
+    "tsc": "tsc",
+    "dts": "node dts.js"
   },
   "devDependencies": {
-    "@stylistic/eslint-plugin": "^5.2.2",
+    "@stylistic/eslint-plugin": "^5.4.0",
     "@webreflection/custom-elements-builtin": "^0.4.1",
-    "interestfor": "^1.0.3",
-    "invokers-polyfill": "^0.5.6",
+    "dts-buddy": "^0.6.2",
+    "interestfor": "^1.0.5",
+    "invokers-polyfill": "^0.5.7",
     "vite": "npm:rolldown-vite@latest"
   },
   "files": [
@@ -24,17 +27,21 @@
   ],
   "exports": {
     ".": {
+      "types": "./types/index.d.ts",
       "default": "./index.js"
     },
     "./src/*": "./src/*",
     "./polyfill": {
-      "default": "./src/polyfill.js"
+      "default": "./src/polyfill.js",
+      "types": "./types/index.d.ts"
     },
     "./supports": {
-      "default": "./src/supports.js"
+      "default": "./src/supports.js",
+      "types": "./types/index.d.ts"
     },
     "./utils": {
-      "default": "./src/utils.js"
+      "default": "./src/utils.js",
+      "types": "./types/index.d.ts"
     }
   },
   "repository": {

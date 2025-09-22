@@ -23,11 +23,11 @@ customElements.define('x-test', class extends WebuumElement {
     console.log('part', this.$foo)
   }
 
-  $fooConnectedCallback(element) {
+  $fooConnectedCallback(element: HTMLElement) {
     console.log('connected', element)
   }
 
-  $fooDisconnectedCallback(element) {
+  $fooDisconnectedCallback(element: HTMLElement) {
     console.log('disconnected', element)
   }
 })
@@ -37,8 +37,8 @@ customElements.define('x-hello', class extends HTMLDivElement {
   declare $fuu: HTMLElement | null
   declare $buu: string
 
-  declare $parts: object
-  declare $shadowParts: object
+  declare $parts: Record<string, string | null>
+  declare $shadowParts: Record<string, string | null>
 
   constructor() {
     super()
@@ -78,18 +78,13 @@ customElements.define('x-hello', class extends HTMLDivElement {
 
   test() {
       console.log('test')
-      this?.$dispatch?.('muhehe', {
-          detail: {
-              test: 'test'
-          }
-      })
   }
 
-  $fooConnectedCallback(element) {
+  $fooConnectedCallback(element: HTMLElement) {
     console.log('foo connected', element)
   }
 
-  $fuuConnectedCallback(element) {
+  $fuuConnectedCallback(element: HTMLElement) {
     console.log('fuu connected', element)
   }
 }, { extends: 'div' })
