@@ -14,6 +14,6 @@
   },
   "dependencies": {
     "@floating-ui/dom": "^1.7.4",
-    "webuum": "^0.0.7"
+    "webuum": "^0.0.8"
   }
 }

@@ -1,4 +1,4 @@
-import { supportsAnchor } from '../utils.js'
+import { supportsAnchor } from '../utils.ts'
 
 /**
  * @param {HTMLElement | Element} referenceElement

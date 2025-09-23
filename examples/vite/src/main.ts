@@ -1,5 +1,5 @@
 import { WebuumElement } from 'webuum'
-import { supportsAnchor } from './utils.js'
+import { supportsAnchor } from './utils.ts'
 
 customElements.define('x-popover', class extends WebuumElement {
         declare $placement: string
@@ -16,11 +16,13 @@ customElements.define('x-popover', class extends WebuumElement {
 
         connectedCallback() {
             this.addEventListener('toggle', (event) => {
+                // @ts-ignore
                 this.$open = event.newState === 'open'
                 if (this.$source?.ariaExpanded) this.$source.ariaExpanded = this.$open.toString()
             })
         }
 
+        // @ts-ignore
         async showPopover({ source }: HTMLElement) {
             if (this.$autoUpdate || !supportsAnchor) {
                 const { autoUpdatePopover } = await import('./popover/index.js')
@@ -30,9 +32,11 @@ customElements.define('x-popover', class extends WebuumElement {
 
             this.$source = source
 
+            // @ts-ignore
             super.showPopover({ source })
         }
 
+        // @ts-ignore
         togglePopover({ source }: HTMLElement) {
             !this.$open
                 ? this.showPopover({ source })
