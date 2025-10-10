@@ -4,10 +4,77 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
+    <title>Vite App</title>
+    <link href="/src/style.css" rel="stylesheet">
+    <script src="/src/main.ts" type="module" async></script>
   </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
+  <body class="p-4 pt-46 min-h-[300vh]" is="x-app">
+    <main class="flex justify-center gap-3">
+      <div class="relative w-fit">
+        <button
+          class="bg-amber-300 hover:bg-amber-400 p-2.5 rounded-md transition cursor-pointer"
+          id="popoverTrigger"
+          command="toggle-popover"
+          commandfor="defaultPopover"
+          aria-haspopup="dialog"
+          aria-expanded="false"
+          aria-controls="defaultPopover"
+        >
+          Show Popover
+        </button>
+        <x-popover
+            class="w-(--anchor-size,anchor-size(inline)) bg-white shadow-sm p-3 bottom"
+            id="defaultPopover"
+            style="--x-popover-margin: calc(var(--spacing) * 3)"
+            popover
+            role="dialog"
+            aria-labelledby="popoverTrigger"
+        >
+          Popover
+          <div data-x-popover-part="custom">asdf</div>
+        </x-popover>
+      </div>
+
+      <div class="relative w-fit">
+        <button
+          class="bg-amber-300 hover:bg-amber-400 p-2.5 rounded-md transition cursor-pointer"
+          interestfor="hoverPopover"
+          aria-describedby="hoverPopover"
+        >
+          Show Tooltip
+        </button>
+
+        <x-popover
+          class="bg-white shadow-sm p-3 top"
+          style="--x-popover-margin: calc(var(--spacing) * 3)"
+          id="hoverPopover"
+          popover="hint"
+          data-auto-update
+          data-placement="top"
+        >
+          Tooltip
+        </x-popover>
+      </div>
+
+      <div class="relative w-fit">
+        <button
+          class="bg-amber-300 hover:bg-amber-400 p-2.5 rounded-md transition cursor-pointer"
+          command="show-modal"
+          commandfor="defaultDialog"
+        >
+          Show Dialog
+        </button>
+
+        <dialog
+          class="x-dialog p-6 max-w-132 w-full outline-0 rounded-md"
+          id="defaultDialog"
+          is="x-dialog"
+          closedby="any"
+        >
+          Dialog
+          <button command="close" commandfor="defaultDialog">Close</button>
+        </dialog>
+      </div>
+    </main>
   </body>
 </html>

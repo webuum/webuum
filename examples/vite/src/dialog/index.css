@@ -1,0 +1,41 @@
+.x-dialog {
+  position: fixed;
+  overflow: auto;
+  margin: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+
+  &,
+  &::backdrop {
+    transition-property: var(--default-transition-property);
+    transition-timing-function: var(--ease-in-out);
+    transition-duration: var(--default-transition-duration);
+    transition-behavior: allow-discrete;
+    opacity: 0;
+  }
+
+  &::backdrop {
+    background-color: rgb(0 0 0 / 80%);
+  }
+
+  &:not([open]) {
+    transform: translateY(-2rem);
+  }
+
+  &[open] {
+    opacity: 1;
+
+    @starting-style {
+      opacity: 0;
+      transform: translateY(-2rem);
+    }
+  }
+
+  &[open]::backdrop {
+    opacity: 1;
+
+    @starting-style {
+      opacity: 0;
+    }
+  }
+}
