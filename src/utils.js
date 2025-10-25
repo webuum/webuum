@@ -40,7 +40,7 @@ export const getPartSelector = (name, selector, localName) => (
  * @param {HTMLElement | ShadowRoot} host
  * @returns {Element[]}
  */
-export const querySelector = (node, selector, host = node) => {
+export const findSelectors = (node, selector, host = node) => {
   const localName = getLocalName(host)
 
   if (node.nodeType === 3) return []
@@ -59,7 +59,7 @@ export const querySelector = (node, selector, host = node) => {
 const nodeCallback = (nodes, host, selector, callback) => {
   nodes?.forEach((node) => {
     if (node?.matches?.(selector)) callback(node)
-    querySelector(node, selector, host?.host ?? host).forEach(callback)
+    findSelectors(node, selector, host?.host ?? host).forEach(callback)
   })
 }
 
@@ -72,7 +72,7 @@ export const partsMutationCallback = (host, parts, { addedNodes, removedNodes } 
   const localName = getLocalName(host)
   const hostElement = host?.host ?? host
 
-  addedNodes ??= querySelector(host, `[${localName ? `data-${localName}-` : ''}part]`)
+  addedNodes ??= findSelectors(host, `[${localName ? `data-${localName}-` : ''}part]`)
 
   for (let [name, selector] of Object.entries(parts)) {
     selector = getPartSelector(name, selector, localName)
@@ -94,7 +94,7 @@ export const partsMutationCallback = (host, parts, { addedNodes, removedNodes } 
 export const commandMutationCallback = (host, { addedNodes } = {}) => {
   const selector = '[command]'
 
-  addedNodes ??= querySelector(host, selector)
+  addedNodes ??= findSelectors(host, selector)
 
   nodeCallback(addedNodes, host, selector, /** @param {HTMLButtonElement} element */ (element) => {
     if (!element.command) return

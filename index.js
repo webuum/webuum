@@ -3,7 +3,7 @@ import {
   getLocalName,
   getPartSelector,
   partsMutationCallback,
-  querySelector,
+  findSelectors,
   typecast,
 } from './src/utils.js'
 
@@ -39,7 +39,7 @@ export const defineParts = (host, parts = {}) => {
 
     Object.defineProperty(host?.host ?? host, name, {
       get: () => {
-        const queryPart = querySelector(host, selector)
+        const queryPart = findSelectors(host, selector)
 
         return queryPart?.[1] ? queryPart : queryPart?.[0] || null
       },
