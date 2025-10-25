@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@floating-ui/dom": "^1.7.4",
+    "@webreflection/custom-elements-builtin": "^0.4.1",
     "interestfor": "^1.0.7",
     "invokers-polyfill": "^0.5.7",
     "webuum": "^0.0.12"
