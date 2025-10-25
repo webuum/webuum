@@ -9,7 +9,12 @@
     <script src="/src/main.ts" type="module" async></script>
   </head>
   <body class="p-4 pt-46 min-h-[300vh]" is="x-app">
-    <main class="flex justify-center gap-3">
+    <div class="text-center max-w-5xl mx-auto mb-4">
+      This demo shows popover, tooltip and dialog with modern native platform APIs.
+      Popover uses very little JavaScript and polyfills unsupported browsers. Tooltip uses polyfill for upcoming interestfor API, and dialog doesn't need any JavaScript at all.
+    </div>
+
+    <main class="flex items-center justify-center max-sm:flex-col gap-3">
       <div class="relative w-fit">
         <button
           class="bg-amber-300 hover:bg-amber-400 p-2.5 rounded-md transition cursor-pointer"
@@ -23,12 +28,12 @@
           Show Popover
         </button>
         <x-popover
-            class="w-(--anchor-size,anchor-size(inline)) bg-white shadow-sm p-3 bottom"
-            id="defaultPopover"
-            style="--x-popover-margin: calc(var(--spacing) * 3)"
-            popover
-            role="dialog"
-            aria-labelledby="popoverTrigger"
+          class="w-(--anchor-size,anchor-size(inline)) bg-white shadow-sm p-3 bottom"
+          id="defaultPopover"
+          style="--x-popover-margin: calc(var(--spacing) * 3)"
+          popover
+          role="dialog"
+          aria-labelledby="popoverTrigger"
         >
           Popover
           <div data-x-popover-part="custom">asdf</div>

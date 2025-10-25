@@ -1,6 +1,6 @@
 {
   "name": "webuum",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "type": "module",
   "main": "index.js",
   "scripts": {
@@ -34,16 +34,16 @@
     },
     "./src/*": "./src/*",
     "./polyfill": {
-      "default": "./src/polyfill.js",
-      "types": "./types/index.d.ts"
+      "types": "./types/index.d.ts",
+      "default": "./src/polyfill.js"
     },
     "./supports": {
-      "default": "./src/supports.js",
-      "types": "./types/index.d.ts"
+      "types": "./types/index.d.ts",
+      "default": "./src/supports.js"
     },
     "./utils": {
-      "default": "./src/utils.js",
-      "types": "./types/index.d.ts"
+      "types": "./types/index.d.ts",
+      "default": "./src/utils.js"
     }
   },
   "repository": {

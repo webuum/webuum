@@ -3,7 +3,7 @@ import { supportsAnchor } from './utils.ts'
 import type { Placement } from '@floating-ui/utils'
 import './polyfill.ts'
 
-// @ts-expect-error - source not supported in types yet
+// @ts-expect-error - source not supported in typescript yet
 customElements.define('x-popover', class extends WebuumElement {
   declare $placement: Placement
   declare $autoUpdate: object | boolean
@@ -24,7 +24,7 @@ customElements.define('x-popover', class extends WebuumElement {
     })
   }
 
-  // @ts-expect-error - source not supported in types yet
+  // @ts-expect-error - source not supported in typescript yet
   async showPopover({ source }: HTMLElement) {
     if (this.$autoUpdate || !supportsAnchor) {
       const { autoUpdatePopover } = await import('./popover/index.ts')
@@ -34,17 +34,17 @@ customElements.define('x-popover', class extends WebuumElement {
 
     this.$source = source
 
-    // @ts-expect-error - source not supported in types yet
+    // @ts-expect-error - source not supported in typescript yet
     super.showPopover({ source })
   }
 
-  // @ts-expect-error - source not supported in types yet
+  // @ts-expect-error - source not supported in typescript yet
   togglePopover({ source }: HTMLElement) {
     if (this.$open) {
       this.hidePopover()
     }
     else {
-      // @ts-expect-error - source not supported in types yet
+      // @ts-expect-error - source not supported in typescript yet
       this.showPopover({ source })
     }
   }
@@ -54,5 +54,4 @@ customElements.define('x-popover', class extends WebuumElement {
 
     super.hidePopover()
   }
-},
-)
+})
