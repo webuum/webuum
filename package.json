@@ -46,6 +46,9 @@
       "default": "./src/utils.js"
     }
   },
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/webuum/webuum.git"
