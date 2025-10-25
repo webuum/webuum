@@ -1,6 +1,6 @@
 {
   "name": "webuum",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "type": "module",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,8 @@
     "eslint": "eslint",
     "eslint-fix": "eslint --fix",
     "tsc": "tsc",
-    "dts": "node dts.js"
+    "dts": "node dts.js",
+    "types": "npm run tsc && npm run dts"
   },
   "devDependencies": {
     "@stylistic/eslint-plugin": "^5.5.0",
