@@ -6,8 +6,9 @@ declare module 'webuum' {
 	export function defineCommandObserver(host: HTMLElement | ShadowRoot): void;
 	export function defineProps(host: HTMLElement, props?: Record<string, unknown>): Record<string, unknown>;
 	export function initializeController(host: HTMLElement): void;
-
 	export class WebuumElement extends HTMLElement {
+		
+		partMutationCallback(name: string, addedElement?: HTMLElement, removedElement?: HTMLElement): void;
 	}
 
 	export {};

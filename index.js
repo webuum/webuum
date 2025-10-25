@@ -13,7 +13,7 @@ import {
  * @returns {void}
  */
 export const defineCommand = (host, replacer = c => c[1].toUpperCase()) => {
-  host.addEventListener('command', (e) => {
+  host.addEventListener('command', /** @param {{source: HTMLButtonElement} & CommandEvent} e */ (e) => {
     e.preventDefault()
 
     e.source.$value = typecast(e.source?.value)
@@ -127,13 +127,19 @@ export const initializeController = (host) => {
   defineProps(host, props)
 }
 
-/**
- * @augments {HTMLElement}
- */
 export class WebuumElement extends HTMLElement {
   constructor() {
     super()
 
     initializeController(this)
   }
+
+  /**
+   * @param {string} name
+   * @param {HTMLElement} [addedElement]
+   * @param {HTMLElement} [removedElement]
+   * @returns {void}
+   */
+  /* eslint-disable-next-line no-unused-vars */
+  partMutationCallback(name, addedElement, removedElement) {}
 }

@@ -19,7 +19,6 @@ customElements.define('x-popover', class extends WebuumElement {
 
   connectedCallback() {
     this.addEventListener('toggle', (event) => {
-      // @ts-expect-error - newState not supported in types yet
       this.$open = event.newState === 'open'
       if (this.$source?.ariaExpanded) this.$source.ariaExpanded = this.$open.toString()
     })

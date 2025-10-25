@@ -6,7 +6,7 @@ import {
     WebuumElement
 } from '../index.js'
 
-customElements.define('x-test', class extends WebuumElement {
+customElements.define('x-test', class Test extends WebuumElement {
   declare $foo: HTMLElement | null
 
   static parts = {
@@ -19,20 +19,22 @@ customElements.define('x-test', class extends WebuumElement {
 
   static dispatches = ['test']
 
-  connectedCallback() {
-    console.log('part', this.$foo)
-  }
+    partMutationCallback(name: keyof typeof Test['parts'], removedElement: HTMLElement, addedElement: HTMLElement) {
+        if (name === '$foo' && addedElement) {
+            console.log('connected', addedElement)
+        }
 
-  $fooConnectedCallback(element: HTMLElement) {
-    console.log('connected', element)
-  }
+        if (name === '$foo' && removedElement) {
+            console.log('disconnected', removedElement)
+        }
+    }
 
-  $fooDisconnectedCallback(element: HTMLElement) {
-    console.log('disconnected', element)
-  }
+    connectedCallback() {
+        console.log('part', this.$foo)
+    }
 })
 
-customElements.define('x-hello', class extends HTMLDivElement {
+customElements.define('x-hello', class Hello extends HTMLDivElement {
   declare $foo: HTMLElement | null
   declare $fuu: HTMLElement | null
   declare $buu: string
@@ -80,11 +82,13 @@ customElements.define('x-hello', class extends HTMLDivElement {
       console.log('test')
   }
 
-  $fooConnectedCallback(element: HTMLElement) {
-    console.log('foo connected', element)
-  }
+  partMutationCallback(name: keyof typeof this.$shadowParts, removedElement: HTMLElement, addedElement: HTMLElement) {
+    if (name === '$fuu' && addedElement) {
+        console.log('connected', addedElement)
+    }
 
-  $fuuConnectedCallback(element: HTMLElement) {
-    console.log('fuu connected', element)
+    if (name === '$fuu' && removedElement) {
+        console.log('disconnected', removedElement)
+    }
   }
 }, { extends: 'div' })

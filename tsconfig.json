@@ -1,6 +1,7 @@
 {
   "include": ["index.js", "src/**/*"],
   "compilerOptions": {
+    "target": "ES2024",
     "allowJs": true,
     "checkJs": false,
     "outDir": "types",

@@ -43,6 +43,8 @@ export const getPartSelector = (name, selector, localName) => (
 export const querySelector = (node, selector, host = node) => {
   const localName = getLocalName(host)
 
+  if (node.nodeType === 3) return []
+
   return [...node.querySelectorAll(selector)].filter(
     element => !host.host || element.closest(`${localName}, [is=${localName}]`) === host,
   )
@@ -56,7 +58,7 @@ export const querySelector = (node, selector, host = node) => {
  */
 const nodeCallback = (nodes, host, selector, callback) => {
   nodes?.forEach((node) => {
-    if (node.matches?.(selector)) callback(node)
+    if (node?.matches?.(selector)) callback(node)
     querySelector(node, selector, host?.host ?? host).forEach(callback)
   })
 }
@@ -64,10 +66,11 @@ const nodeCallback = (nodes, host, selector, callback) => {
 /**
  * @param {HTMLElement | ShadowRoot} host
  * @param {Record<string, string | null>} parts
- * @param {{addedNodes?: Element[], removedNodes?: Element[]}} param2
+ * @param {{addedNodes?: Element[], removedNodes?: Element[]}} nodes
  */
 export const partsMutationCallback = (host, parts, { addedNodes, removedNodes } = {}) => {
   const localName = getLocalName(host)
+  const hostElement = host?.host ?? host
 
   addedNodes ??= querySelector(host, `[${localName ? `data-${localName}-` : ''}part]`)
 
@@ -75,11 +78,11 @@ export const partsMutationCallback = (host, parts, { addedNodes, removedNodes } 
     selector = getPartSelector(name, selector, localName)
 
     nodeCallback(addedNodes, host, selector, element =>
-      (host?.host ?? host)?.[`${name}ConnectedCallback`]?.(element),
+      hostElement?.partMutationCallback?.(name, undefined, element),
     )
 
     nodeCallback(removedNodes, host, selector, element =>
-      (host?.host ?? host)?.[`${name}DisconnectedCallback`]?.(element),
+      hostElement?.partMutationCallback?.(name, element),
     )
   }
 }
@@ -93,7 +96,7 @@ export const commandMutationCallback = (host, { addedNodes } = {}) => {
 
   addedNodes ??= querySelector(host, selector)
 
-  nodeCallback(addedNodes, host, selector, (element) => {
+  nodeCallback(addedNodes, host, selector, /** @param {HTMLButtonElement} element */ (element) => {
     if (!element.command) return
     if (!element.commandForElement) element.commandForElement = host?.host ?? host
   })
