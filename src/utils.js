@@ -78,11 +78,11 @@ export const partsMutationCallback = (host, parts, { addedNodes, removedNodes } 
     selector = getPartSelector(name, selector, localName)
 
     nodeCallback(addedNodes, host, selector, element =>
-      hostElement?.partMutationCallback?.(name, undefined, element),
+      hostElement?.partConnectedCallback?.(name, element),
     )
 
     nodeCallback(removedNodes, host, selector, element =>
-      hostElement?.partMutationCallback?.(name, element),
+      hostElement?.partDisconnectedCallback?.(name, element),
     )
   }
 }

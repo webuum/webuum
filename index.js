@@ -136,10 +136,17 @@ export class WebuumElement extends HTMLElement {
 
   /**
    * @param {string} name
-   * @param {HTMLElement} [addedElement]
-   * @param {HTMLElement} [removedElement]
+   * @param {HTMLElement} element
    * @returns {void}
    */
   /* eslint-disable-next-line no-unused-vars */
-  partMutationCallback(name, addedElement, removedElement) {}
+  partConnectedCallback(name, element) {}
+
+  /**
+   * @param {string} name
+   * @param {HTMLElement} element
+   * @returns {void}
+   */
+  /* eslint-disable-next-line no-unused-vars */
+  partDisconnectedCallback(name, element) {}
 }

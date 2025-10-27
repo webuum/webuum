@@ -8,7 +8,9 @@ declare module 'webuum' {
 	export function initializeController(host: HTMLElement): void;
 	export class WebuumElement extends HTMLElement {
 		
-		partMutationCallback(name: string, addedElement?: HTMLElement, removedElement?: HTMLElement): void;
+		partConnectedCallback(name: string, element: HTMLElement): void;
+		
+		partDisconnectedCallback(name: string, element: HTMLElement): void;
 	}
 
 	export {};

@@ -19,13 +19,15 @@ customElements.define('x-test', class Test extends WebuumElement {
 
   static dispatches = ['test']
 
-    partMutationCallback(name: keyof typeof Test['parts'], removedElement: HTMLElement, addedElement: HTMLElement) {
-        if (name === '$foo' && addedElement) {
-            console.log('connected', addedElement)
+    partConnectedCallback(name: keyof typeof Test['parts'], element: HTMLElement) {
+        if (name === '$foo') {
+            console.log('connected', element)
         }
+    }
 
-        if (name === '$foo' && removedElement) {
-            console.log('disconnected', removedElement)
+    partDisconnectedCallback(name: keyof typeof Test['parts'], element: HTMLElement) {
+        if (name === '$foo') {
+            console.log('disconnected', element)
         }
     }
 
@@ -82,13 +84,15 @@ customElements.define('x-hello', class Hello extends HTMLDivElement {
       console.log('test')
   }
 
-  partMutationCallback(name: keyof typeof this.$shadowParts, removedElement: HTMLElement, addedElement: HTMLElement) {
-    if (name === '$fuu' && addedElement) {
-        console.log('connected', addedElement)
+  partConnectedCallback(name: keyof typeof this.$shadowParts, element: HTMLElement) {
+    if (name === '$fuu') {
+        console.log('connected', element)
     }
+  }
 
-    if (name === '$fuu' && removedElement) {
-        console.log('disconnected', removedElement)
+  partDisconnectedCallback(name: keyof typeof this.$shadowParts, element: HTMLElement) {
+    if (name === '$fuu') {
+      console.log('disconnected', element)
     }
   }
 }, { extends: 'div' })
