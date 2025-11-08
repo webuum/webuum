@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Webuum Vanilla Example</title>
+  <script src="https://cdn.jsdelivr.net/npm/webuum@0.0.12/src/polyfill.js/+esm" type="module"></script>
+  <script type="importmap">
+    {
+      "imports": {
+        "webuum": "https://cdn.jsdelivr.net/npm/webuum/dist/index.js"
+      }
+    }
+  </script>
+  <script type="module">
+    import { WebuumElement } from 'webuum'
+
+    customElements.define('x-example',
+      /**
+       * @property {string|null} $textString
+       * @property {HTMLElement|null} $text
+       */
+      class extends WebuumElement {
+        static props = {
+          $textString: null,
+        }
+
+        static parts = {
+          $text: null,
+        }
+        connectedCallback() {
+          console.log('connected')
+        }
+
+        addText() {
+          this.$text.textContent = this.$textString
+        }
+
+        removeText() {
+          this.$text.textContent = ''
+        }
+      }
+    )
+  </script>
+</head>
+<body>
+  <x-example data-text-string="Hello world" id="exampleComponent">
+    <button command="--addText" commandfor="exampleComponent">Add text</button>
+    <button command="--removeText" commandfor="exampleComponent">Remove text</button>
+    <div data-x-example-part="text"></div>
+  </x-example>
+</body>
+</html>
