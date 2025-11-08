@@ -11,17 +11,17 @@
     "eslint-fix": "eslint --fix"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.1.16",
-    "tailwindcss": "^4.1.16",
-    "typescript": "~5.9.3",
-    "typescript-eslint": "^8.46.2",
-    "vite": "^7.1.12"
+    "@tailwindcss/vite": "^4",
+    "tailwindcss": "^4",
+    "typescript": "~5",
+    "typescript-eslint": "^8",
+    "vite": "^7"
   },
   "dependencies": {
-    "@floating-ui/dom": "^1.7.4",
-    "@webreflection/custom-elements-builtin": "^0.4.1",
-    "interestfor": "^1.0.7",
-    "invokers-polyfill": "^0.5.7",
-    "webuum": "^0.0.12"
+    "@floating-ui/dom": "^1",
+    "@webreflection/custom-elements-builtin": "^0",
+    "interestfor": "^1",
+    "invokers-polyfill": "^0",
+    "webuum": "^0"
   }
 }

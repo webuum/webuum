@@ -1,0 +1,54 @@
+---
+
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Astro</title>
+	</head>
+	<body>
+		<h1>Astro</h1>
+    <x-example data-text-string="Hello world" id="exampleComponent">
+      <button command="--addText" commandfor="exampleComponent">Add text</button>
+      <button command="--removeText" commandfor="exampleComponent">Remove text</button>
+      <div data-x-example-part="text"></div>
+    </x-example>
+	</body>
+</html>
+
+<script>
+  import { WebuumElement } from 'webuum'
+
+  customElements.define('x-example', class extends WebuumElement {
+    declare $textString: string | null
+    declare $text: HTMLElement | null
+
+    static props = {
+      $textString: null,
+    }
+
+    static parts = {
+      $text: null,
+    }
+    connectedCallback() {
+      console.log('connected')
+    }
+
+    addText() {
+      if (this.$text) {
+        this.$text.textContent = this.$textString
+      }
+    }
+
+    removeText() {
+      if (this.$text) {
+        this.$text.textContent = ''
+      }
+    }
+    }
+  )
+</script>
