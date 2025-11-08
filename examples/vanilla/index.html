@@ -3,16 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <title>Webuum Vanilla Example</title>
-  <script src="https://cdn.jsdelivr.net/npm/webuum@0.0.12/src/polyfill.js/+esm" type="module"></script>
-  <script type="importmap">
-    {
-      "imports": {
-        "webuum": "https://cdn.jsdelivr.net/npm/webuum/dist/index.js"
-      }
-    }
-  </script>
+  <script src="https://cdn.jsdelivr.net/npm/webuum/src/polyfill.js/+esm" type="module"></script>
   <script type="module">
-    import { WebuumElement } from 'webuum'
+    import { WebuumElement } from 'https://cdn.jsdelivr.net/npm/webuum/dist/index.js'
 
     customElements.define('x-example',
       /**
