@@ -1,17 +1,7 @@
-import { supportsCommand, supportsInterest, supportsIs } from 'webuum/supports'
+import { supportsInterest } from 'webuum/supports'
+import 'webuum/polyfill'
 
-if (!supportsIs()) {
-  // @ts-expect-error no types
-  await import('@webreflection/custom-elements-builtin')
-}
-
-if (!supportsCommand) {
-  const { apply } = await import('invokers-polyfill/fn')
-
-  apply()
-}
-
-if (!supportsInterest && document.querySelector('[interestfor]')) {
+if (!supportsInterest) {
   // @ts-expect-error no types
   import('interestfor/src/interestfor.js')
 }
