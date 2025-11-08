@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "astro": "^5",
-    "webuum": "^0"
+    "webuum": "^0",
+    "@webreflection/custom-elements-builtin": "^0",
+    "invokers-polyfill": "^0"
   }
 }
