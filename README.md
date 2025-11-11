@@ -10,7 +10,7 @@
 
 # [Webuum](https://webuum.dev)
 
-> Very early WIP
+> This is a pre-release version. Use in production with caution — the API's may still change before the stable release.
 
 When the platform is 95% of what you need.
 Made for websites — not web apps.
