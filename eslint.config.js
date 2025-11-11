@@ -17,6 +17,6 @@ export default defineConfig([
         ...globals.browser,
       },
     },
-    ignores: ['dist/**'],
+    ignores: ['dist/**', '**/dist/**', '**/.astro/**'],
   },
 ])
