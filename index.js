@@ -41,7 +41,7 @@ export const defineParts = (host, parts = {}) => {
       get: () => {
         const queryPart = findSelectors(host, selector)
 
-        return queryPart?.[1] ? queryPart : queryPart?.[0] || null
+        return queryPart[1] ? queryPart : queryPart[0] || null
       },
     })
   }
@@ -59,7 +59,7 @@ export const defineParts = (host, parts = {}) => {
 export const defineHostObserver = (host, callback, arg) => {
   new MutationObserver((mutationList) => {
     for (const mutation of mutationList) {
-      if (mutation.type === 'childList') callback(...arg, mutation)
+      callback(...arg, mutation)
     }
   }).observe(host, {
     childList: true,
