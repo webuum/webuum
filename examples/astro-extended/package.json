@@ -13,11 +13,11 @@
     "@floating-ui/dom": "^1",
     "@tailwindcss/vite": "^4",
     "@webreflection/custom-elements-builtin": "^0",
-    "astro": "^5",
+    "astro": "^6",
     "interestfor": "^1",
-    "invokers-polyfill": "^0",
+    "invokers-polyfill": "^1",
     "tailwindcss": "^4",
-    "typescript": "~5",
+    "typescript": "~6",
     "webuum": "^0"
   }
 }

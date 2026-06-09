@@ -9,9 +9,9 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5",
+    "astro": "^6",
     "webuum": "^0",
     "@webreflection/custom-elements-builtin": "^0",
-    "invokers-polyfill": "^0"
+    "invokers-polyfill": "^1"
   }
 }
