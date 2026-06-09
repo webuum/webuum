@@ -1,0 +1,197 @@
+---
+import '../style.css'
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <meta
+      name="description"
+      content="Astro demo showing how Webuum can extend native dialog, popover and tooltip components."
+    />
+    <link rel="preload" as="image" href="/native-ui-layers.png" fetchpriority="high" />
+    <title>Webuum Astro Extended</title>
+    <script>
+      import '../main.ts'
+    </script>
+  </head>
+  <body>
+    <header class="section-shell flex items-center justify-between gap-4 py-5">
+      <a class="text-base font-black tracking-normal text-[#123d31]" href="/" aria-label="Webuum Astro Extended home">
+        webuum astro
+      </a>
+      <nav aria-label="Primary navigation">
+        <ul class="flex items-center gap-2 text-sm font-bold text-[#40534b] sm:gap-5">
+          <li><a class="hover:text-[#123d31]" href="#native">Native APIs</a></li>
+          <li><a class="hover:text-[#123d31]" href="#patterns">Patterns</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="section-shell grid items-center gap-10 pb-16 pt-8 md:grid-cols-[1fr_0.92fr] md:pb-24 md:pt-14">
+        <div class="max-w-2xl">
+          <p class="eyebrow">
+            <span class="h-2 w-2 rounded-full bg-[#2cb67d]"></span>
+            Astro + native platform APIs
+          </p>
+          <h1 class="mt-6 text-5xl font-black leading-[0.98] text-[#10201a] sm:text-6xl">
+            Build UI with the browser doing the heavy lifting.
+          </h1>
+          <p class="mt-6 max-w-xl text-lg leading-8 text-[#53645d]">
+            This extended Astro example shows Webuum wrapping native dialog, popover and interest-driven tooltip behavior with small custom elements.
+          </p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <button
+              class="primary-button"
+              command="show-modal"
+              commandfor="demoDialog"
+            >
+              Open dialog
+            </button>
+            <a class="secondary-button" href="#patterns">View native controls</a>
+          </div>
+        </div>
+
+        <figure class="relative">
+          <img
+            class="aspect-[16/11] w-full rounded-lg object-cover shadow-[0_30px_80px_rgb(34_55_47_/_18%)]"
+            src="/native-ui-layers.png"
+            alt="Abstract layered native web interface panels."
+            width="1672"
+            height="941"
+            fetchpriority="high"
+          />
+        </figure>
+      </section>
+
+      <section id="native" class="border-y border-[#10201a12] bg-white/62 py-14">
+        <div class="section-shell">
+          <p class="mb-6 max-w-3xl text-sm font-semibold leading-6 text-[#53645d]">
+            In Chrome, you can disable JavaScript and these controls still work because dialog, popover and tooltip behavior is handled by native browser APIs.
+          </p>
+
+          <div class="grid gap-5 md:grid-cols-3">
+          <article class="feature-panel p-6">
+            <p class="text-sm font-black uppercase text-[#c07922]">Dialog</p>
+            <h2 class="mt-3 text-2xl font-black text-[#10201a]">Modal semantics stay native</h2>
+            <p class="mt-3 leading-7 text-[#5b6c65]">
+              The trigger uses <code>command="show-modal"</code>, and the close button uses <code>command="close"</code>.
+            </p>
+          </article>
+
+          <article class="feature-panel p-6">
+            <p class="text-sm font-black uppercase text-[#1d7354]">Popover</p>
+            <h2 class="mt-3 text-2xl font-black text-[#10201a]">Anchoring with tiny glue code</h2>
+            <p class="mt-3 leading-7 text-[#5b6c65]">
+              <code>x-popover</code> keeps the native popover state and adds placement updates when anchor positioning needs help.
+            </p>
+          </article>
+
+          <article class="feature-panel p-6">
+            <p class="text-sm font-black uppercase text-[#255f91]">Tooltip</p>
+            <h2 class="mt-3 text-2xl font-black text-[#10201a]">Interest invokes hints</h2>
+            <p class="mt-3 leading-7 text-[#5b6c65]">
+              The tooltip uses <code>interestfor</code> and a hint popover, matching the Vite demo’s native-first approach.
+            </p>
+          </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="patterns" class="section-shell grid gap-8 py-16 lg:grid-cols-[0.85fr_1fr]">
+        <div>
+          <p class="eyebrow">Interactive sample</p>
+          <h2 class="mt-5 text-4xl font-black leading-tight text-[#10201a]">One page, three native components.</h2>
+          <p class="mt-4 leading-8 text-[#53645d]">
+            Use these controls to verify the wiring in Astro without framework-specific client islands.
+          </p>
+        </div>
+
+        <div class="feature-panel p-4 sm:p-6">
+          <div class="grid gap-3 sm:grid-cols-3">
+            <div class="relative min-w-0">
+              <button
+                class="secondary-button w-full"
+                id="popoverTrigger"
+                command="toggle-popover"
+                commandfor="defaultPopover"
+                aria-haspopup="dialog"
+                aria-expanded="false"
+                aria-controls="defaultPopover"
+              >
+                Popover
+              </button>
+              <x-popover
+                class="bottom z-20 w-[min(22rem,calc(100vw-2rem))] rounded-lg border border-[#10201a1f] bg-white p-4 text-sm leading-6 text-[#40534b] shadow-2xl"
+                id="defaultPopover"
+                style="--x-popover-margin: 0.75rem"
+                popover=""
+                role="dialog"
+                aria-labelledby="popoverTrigger"
+              >
+                Anchored to the invoking button, powered by Popover API and Webuum.
+                <div class="mt-3 rounded-md bg-[#eef8f1] px-3 py-2 text-xs font-bold leading-5 text-[#174f3d]" data-x-popover-part="custom">
+                  Native browser behavior, enhanced only where needed.
+                </div>
+              </x-popover>
+            </div>
+
+            <div class="relative min-w-0">
+              <button
+                class="secondary-button w-full"
+                interestfor="hoverPopover"
+                aria-describedby="hoverPopover"
+              >
+                Tooltip
+              </button>
+
+              <x-popover
+                class="top z-20 rounded-lg border border-[#10201a1f] bg-[#10201a] px-3 py-2 text-sm font-bold text-white shadow-2xl"
+                style="--x-popover-margin: 0.75rem"
+                id="hoverPopover"
+                popover="hint"
+                data-auto-update=""
+                data-placement="top"
+              >
+                Opened through Interest Invokers.
+              </x-popover>
+            </div>
+
+            <div class="relative min-w-0">
+              <button
+                class="secondary-button w-full"
+                command="show-modal"
+                commandfor="demoDialog"
+              >
+                Dialog
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <dialog
+      class="x-dialog w-[min(92vw,34rem)] rounded-lg border border-white/70 bg-white p-0 text-[#10201a] shadow-[0_30px_90px_rgb(8_20_16_/_34%)] outline-0"
+      id="demoDialog"
+      is="x-dialog"
+      closedby="any"
+      aria-labelledby="demoDialogTitle"
+    >
+      <div class="p-6 sm:p-8">
+        <p class="text-sm font-black uppercase text-[#1d7354]">Native dialog</p>
+        <h2 id="demoDialogTitle" class="mt-3 text-3xl font-black">No framework state required</h2>
+        <p class="mt-4 leading-7 text-[#5b6c65]">
+          The browser owns modality, focus and Escape handling. Webuum lets the project keep behavior close to the native element.
+        </p>
+        <div class="mt-6 flex justify-end">
+          <button class="primary-button" command="close" commandfor="demoDialog">Close</button>
+        </div>
+      </div>
+    </dialog>
+  </body>
+</html>
