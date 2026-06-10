@@ -31,6 +31,37 @@ describe('defineParts', () => {
 
     expect(host.$foo).toBe(part)
   })
+
+  test('does not leak parts of a nested same-name component', () => {
+    const host = document.createElement('x-parts-nested')
+    defineParts(host, { $item: null })
+
+    const ownPart = document.createElement('div')
+    ownPart.setAttribute('data-x-parts-nested-part', 'item')
+    host.append(ownPart)
+
+    const inner = document.createElement('x-parts-nested')
+    const innerPart = document.createElement('div')
+    innerPart.setAttribute('data-x-parts-nested-part', 'item')
+    inner.append(innerPart)
+    host.append(inner)
+
+    expect(host.$item).toBe(ownPart)
+  })
+
+  test('creates getter on host element for parts in shadow root', () => {
+    const host = document.createElement('x-parts-shadow')
+    const shadow = host.attachShadow({ mode: 'open' })
+    defineParts(shadow, { $foo: null })
+
+    expect(host.$foo).toBeNull()
+
+    const part = document.createElement('div')
+    part.setAttribute('part', 'foo')
+    shadow.append(part)
+
+    expect(host.$foo).toBe(part)
+  })
 })
 
 describe('defineProps', () => {

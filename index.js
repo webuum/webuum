@@ -20,7 +20,7 @@ export const defineCommand = (host, replacer = c => c[1].toUpperCase()) => {
 
     const method = e.command
       .replace(/^--/, '')
-      .replace(/(-\w)/g, replacer)
+      .replace(/-\w/g, replacer)
 
     if (method in host) host[method](e)
   })
@@ -50,40 +50,23 @@ export const defineParts = (host, parts = {}) => {
 }
 
 /**
- * @template {any[]} T
- * @param {HTMLElement | ShadowRoot} host
- * @param {(...args: [...T, MutationRecord?]) => void} callback
- * @param {T} arg
- * @returns {void}
- */
-export const defineHostObserver = (host, callback, arg) => {
-  new MutationObserver((mutationList) => {
-    for (const mutation of mutationList) {
-      callback(...arg, mutation)
-    }
-  }).observe(host, {
-    childList: true,
-    subtree: true,
-  })
-
-  callback(...arg)
-}
-
-/**
  * @param {HTMLElement | ShadowRoot} host
  * @param {Record<string, string | null>} [parts={}]
  * @returns {void}
  */
-export const definePartsObserver = (host, parts = {}) => {
-  defineHostObserver(host, partsMutationCallback, [host, parts])
-}
+export const defineObserver = (host, parts = {}) => {
+  /** @param {MutationRecord} [mutation] */
+  const callback = (mutation) => {
+    partsMutationCallback(host, parts, mutation)
+    commandMutationCallback(host, mutation)
+  }
 
-/**
- * @param {HTMLElement | ShadowRoot} host
- * @returns {void}
- */
-export const defineCommandObserver = (host) => {
-  defineHostObserver(host, commandMutationCallback, [host])
+  new MutationObserver(mutationList => mutationList.forEach(callback)).observe(host, {
+    childList: true,
+    subtree: true,
+  })
+
+  callback()
 }
 
 /**
@@ -114,39 +97,19 @@ export const defineProps = (host, props = {}) => {
  * @param {HTMLElement} host
  * @returns {void}
  */
-export const initializeController = (host) => {
-  const parts = /** @type {{parts?: Record<string, string | null>}} */host.constructor?.parts
-  const props = /** @type {{props?: Record<string, unknown>}} */host.constructor.props
+export const defineElement = (host) => {
+  const { parts, props } = /** @type {{parts?: Record<string, string | null>, props?: Record<string, unknown>}} */host.constructor
 
   defineCommand(host)
-  defineCommandObserver(host)
-
   defineParts(host, parts)
-  definePartsObserver(host, parts)
-
   defineProps(host, props)
+  defineObserver(host, parts)
 }
 
 export class WebuumElement extends HTMLElement {
   constructor() {
     super()
 
-    initializeController(this)
+    defineElement(this)
   }
-
-  /**
-   * @param {string} name
-   * @param {HTMLElement} element
-   * @returns {void}
-   */
-  /* eslint-disable-next-line no-unused-vars */
-  partConnectedCallback(name, element) {}
-
-  /**
-   * @param {string} name
-   * @param {HTMLElement} element
-   * @returns {void}
-   */
-  /* eslint-disable-next-line no-unused-vars */
-  partDisconnectedCallback(name, element) {}
 }

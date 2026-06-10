@@ -5,6 +5,10 @@ import globals from 'globals'
 
 export default defineConfig([
   {
+    // examples are self-contained projects with their own eslint setup
+    ignores: ['**/dist/**', '**/.astro/**', 'examples/**', 'coverage/**'],
+  },
+  {
     plugins: { js },
     extends: [
       'js/recommended',
@@ -17,6 +21,5 @@ export default defineConfig([
         ...globals.browser,
       },
     },
-    ignores: ['dist/**', '**/dist/**', '**/.astro/**'],
   },
 ])
