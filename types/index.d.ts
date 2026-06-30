@@ -3,8 +3,10 @@ declare module 'webuum' {
 	export function defineParts(host: HTMLElement | ShadowRoot, parts?: Record<string, string | null>): Record<string, string | null>;
 	export function defineObserver(host: HTMLElement | ShadowRoot, parts?: Record<string, string | null>): void;
 	export function defineProps(host: HTMLElement, props?: Record<string, unknown>): Record<string, unknown>;
+	export function defineSignal(host: HTMLElement): void;
 	export function defineElement(host: HTMLElement): void;
 	export class WebuumElement extends HTMLElement {
+		disconnectedCallback(): void;
 	}
 
 	export {};
@@ -33,6 +35,19 @@ declare module 'webuum/utils' {
 	}): void;
 
 	export {};
+}
+
+declare module 'webuum' {
+	export interface WebuumElement {
+		/** Lifecycle-bound `AbortController`, aborted on disconnect. */
+		$controller: AbortController | undefined;
+		/** Lifecycle-bound `AbortSignal` for `addEventListener`, recreated after abort. */
+		$signal: AbortSignal;
+		/** Called when a matching part is added to the host. */
+		partConnectedCallback?(name: string, element: Element): void;
+		/** Called when a matching part is removed from the host. */
+		partDisconnectedCallback?(name: string, element: Element): void;
+	}
 }
 
 //# sourceMappingURL=index.d.ts.map

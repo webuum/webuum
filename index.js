@@ -97,6 +97,20 @@ export const defineProps = (host, props = {}) => {
  * @param {HTMLElement} host
  * @returns {void}
  */
+export const defineSignal = (host) => {
+  Object.defineProperty(host, '$signal', {
+    get: () => {
+      if (host.$controller?.signal.aborted ?? true) host.$controller = new AbortController()
+
+      return host.$controller.signal
+    },
+  })
+}
+
+/**
+ * @param {HTMLElement} host
+ * @returns {void}
+ */
 export const defineElement = (host) => {
   const { parts, props } = /** @type {{parts?: Record<string, string | null>, props?: Record<string, unknown>}} */host.constructor
 
@@ -104,6 +118,7 @@ export const defineElement = (host) => {
   defineParts(host, parts)
   defineProps(host, props)
   defineObserver(host, parts)
+  defineSignal(host)
 }
 
 export class WebuumElement extends HTMLElement {
@@ -111,5 +126,9 @@ export class WebuumElement extends HTMLElement {
     super()
 
     defineElement(this)
+  }
+
+  disconnectedCallback() {
+    this.$controller?.abort()
   }
 }
