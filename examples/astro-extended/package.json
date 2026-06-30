@@ -18,6 +18,6 @@
     "invokers-polyfill": "^1",
     "tailwindcss": "^4",
     "typescript": "~6",
-    "webuum": "^0"
+    "webuum": "^0.2.0-next.0"
   }
 }

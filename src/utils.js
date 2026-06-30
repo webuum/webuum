@@ -31,7 +31,7 @@ export const getLocalName = (host) => {
  * @returns {string}
  */
 export const getPartSelector = (name, selector, localName) => (
-  `[${localName ? `data-${localName}-` : ''}part~="${selector || name.slice(1)}"]`
+  `[${localName ? `data-${localName}-` : ''}part${name ? `~="${selector || name.slice(1)}"` : ''}]`
 )
 
 /**
@@ -41,13 +41,17 @@ export const getPartSelector = (name, selector, localName) => (
  * @returns {Element[]}
  */
 export const findSelectors = (node, selector, host = node) => {
-  const localName = getLocalName(host)
+  if (!node.querySelectorAll) return []
 
-  if (node.nodeType === 3) return []
+  const hostElement = host?.host ?? host
+  const localName = getLocalName(hostElement)
 
-  return [...node.querySelectorAll(selector)].filter(
-    element => !host.host || element.closest(`${localName}, [is=${localName}]`) === host,
-  )
+  return [...node.querySelectorAll(selector)].filter((element) => {
+    // owner is the closest same-name component, none when the scope root cuts the tree above it
+    const owner = element.closest(`${localName}, [is=${localName}]`)
+
+    return !owner || owner === hostElement
+  })
 }
 
 /**
@@ -72,7 +76,7 @@ export const partsMutationCallback = (host, parts, { addedNodes, removedNodes } 
   const localName = getLocalName(host)
   const hostElement = host?.host ?? host
 
-  addedNodes ??= findSelectors(host, `[${localName ? `data-${localName}-` : ''}part]`)
+  addedNodes ??= findSelectors(host, getPartSelector('', '', localName))
 
   for (let [name, selector] of Object.entries(parts)) {
     selector = getPartSelector(name, selector, localName)

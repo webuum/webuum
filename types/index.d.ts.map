@@ -4,11 +4,10 @@
 	"names": [
 		"defineCommand",
 		"defineParts",
-		"defineHostObserver",
-		"definePartsObserver",
-		"defineCommandObserver",
+		"defineObserver",
 		"defineProps",
-		"initializeController",
+		"defineSignal",
+		"defineElement",
 		"WebuumElement",
 		"supportsCommand",
 		"supportsInterest",
@@ -30,6 +29,6 @@
 		null,
 		null
 	],
-	"mappings": ";iBAcaA,aAAaA;iBAmBbC,WAAWA;iBAyBXC,kBAAkBA;iBAkBlBC,mBAAmBA;iBAQnBC,qBAAqBA;iBASrBC,WAAWA;iBAuBXC,oBAAoBA;cAapBC,aAAaA;;;;;;;;;;;cC9HbC,eAAeA;;cAMfC,gBAAgBA;iBAQhBC,UAAUA;;;;;;iBCbVC,QAAQA;iBAkBRC,YAAYA;iBAUZC,eAAeA;iBAUfC,aAAaA;iBA4BbC,qBAAqBA;;;;iBAuBrBC,uBAAuBA",
+	"mappings": ";iBAcaA,aAAaA;iBAmBbC,WAAWA;iBAuBXC,cAAcA;iBAoBdC,WAAWA;iBAuBXC,YAAYA;iBAcZC,aAAaA;cAUbC,aAAaA;;;;;;;;cCxHbC,eAAeA;;cAMfC,gBAAgBA;iBAQhBC,UAAUA;;;;;;iBCbVC,QAAQA;iBAkBRC,YAAYA;iBAUZC,eAAeA;iBAUfC,aAAaA;iBAgCbC,qBAAqBA;;;;iBAuBrBC,uBAAuBA",
 	"ignoreList": []
 }

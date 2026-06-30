@@ -21,7 +21,7 @@ customElements.define('x-popover', class extends WebuumElement {
     this.addEventListener('toggle', (event) => {
       this.$open = event.newState === 'open'
       if (this.$source?.ariaExpanded) this.$source.ariaExpanded = this.$open.toString()
-    })
+    }, { signal: this.$signal })
   }
 
   // @ts-expect-error - source not supported in typescript yet

@@ -1,10 +1,8 @@
 import { describe, expect, test, vi } from 'vitest'
 import {
   WebuumElement,
-  defineCommandObserver,
-  defineHostObserver,
-  definePartsObserver,
-  initializeController,
+  defineObserver,
+  defineElement,
 } from '../index.js'
 
 let customElementCounter = 0
@@ -28,28 +26,12 @@ const createCommandEvent = (command, source) => {
 }
 
 describe('observers', () => {
-  test('defineHostObserver calls callback immediately and on mutation', async () => {
-    const host = document.createElement('div')
-    const callback = vi.fn()
-
-    defineHostObserver(host, callback, ['arg'])
-    expect(callback).toHaveBeenCalledTimes(1)
-    expect(callback).toHaveBeenNthCalledWith(1, 'arg')
-
-    host.append(document.createElement('span'))
-    await waitForMutationObserver()
-
-    expect(callback).toHaveBeenCalledTimes(2)
-    expect(callback.mock.calls[1][0]).toBe('arg')
-    expect(callback.mock.calls[1][1]).toBeInstanceOf(MutationRecord)
-  })
-
-  test('definePartsObserver reacts to added and removed parts', async () => {
+  test('defineObserver reacts to added and removed parts', async () => {
     const host = document.createElement('x-parts-observer')
     host.partConnectedCallback = vi.fn()
     host.partDisconnectedCallback = vi.fn()
 
-    definePartsObserver(host, { $foo: null })
+    defineObserver(host, { $foo: null })
 
     const part = document.createElement('div')
     part.setAttribute('data-x-parts-observer-part', 'foo')
@@ -64,9 +46,25 @@ describe('observers', () => {
     expect(host.partDisconnectedCallback).toHaveBeenCalledWith('$foo', part)
   })
 
-  test('defineCommandObserver links command element to host', async () => {
+  test('defineObserver ignores parts of a nested same-name component', async () => {
+    const host = document.createElement('x-nested-observer')
+    host.partConnectedCallback = vi.fn()
+
+    defineObserver(host, { $foo: null })
+
+    const inner = document.createElement('x-nested-observer')
+    const innerPart = document.createElement('div')
+    innerPart.setAttribute('data-x-nested-observer-part', 'foo')
+    inner.append(innerPart)
+    host.append(inner)
+    await waitForMutationObserver()
+
+    expect(host.partConnectedCallback).not.toHaveBeenCalled()
+  })
+
+  test('defineObserver links command element to host', async () => {
     const host = document.createElement('div')
-    defineCommandObserver(host)
+    defineObserver(host)
 
     const button = document.createElement('button')
     button.setAttribute('command', '--run')
@@ -79,7 +77,7 @@ describe('observers', () => {
   })
 })
 
-describe('initializeController', () => {
+describe('defineElement', () => {
   test('wires command, parts, props and observers based on constructor statics', async () => {
     const tag = nextTag('x-init')
 
@@ -102,7 +100,7 @@ describe('initializeController', () => {
     customElements.define(tag, InitElement)
 
     const host = document.createElement(tag)
-    initializeController(host)
+    defineElement(host)
 
     expect(host.$count).toBe(5)
     host.dataset.count = '7'
@@ -132,7 +130,7 @@ describe('initializeController', () => {
 })
 
 describe('WebuumElement', () => {
-  test('constructor auto-initializes controller and allows subclass callbacks', async () => {
+  test('constructor auto-defines element and allows subclass callbacks', async () => {
     const tag = nextTag('x-webuum-element')
 
     class TestElement extends WebuumElement {

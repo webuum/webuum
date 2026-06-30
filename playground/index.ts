@@ -1,7 +1,7 @@
 import {
-    defineCommand, defineCommandObserver,
+    defineCommand,
+    defineObserver,
     defineParts,
-    definePartsObserver,
     defineProps,
     WebuumElement
 } from '../index.js'
@@ -16,8 +16,6 @@ customElements.define('x-test', class Test extends WebuumElement {
   static props = {
     $buu: 'test',
   }
-
-  static dispatches = ['test']
 
     partConnectedCallback(name: keyof typeof Test['parts'], element: HTMLElement) {
         if (name === '$foo') {
@@ -49,7 +47,6 @@ customElements.define('x-hello', class Hello extends HTMLDivElement {
     this.attachShadow({ mode: "open" });
 
     defineCommand(this)
-    defineCommandObserver(this.shadowRoot)
 
     this.$parts = defineParts(this, {
       $foo: 'maja',
@@ -59,8 +56,8 @@ customElements.define('x-hello', class Hello extends HTMLDivElement {
       $fuu: 'maja',
     })
 
-    definePartsObserver(this, this.$parts)
-    definePartsObserver(this.shadowRoot, this.$shadowParts)
+    defineObserver(this, this.$parts)
+    defineObserver(this.shadowRoot, this.$shadowParts)
 
     defineProps(this, {
       $buu: 'test',
