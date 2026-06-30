@@ -12,6 +12,12 @@ declare module 'webuum' {
 	export {};
 }
 
+declare module 'webuum/observers' {
+	export function defineIntersectionObserver(host: HTMLElement, options?: IntersectionObserverInit): IntersectionObserver;
+
+	export {};
+}
+
 declare module 'webuum/supports' {
 	export const supportsCommand: boolean;
 
@@ -47,6 +53,13 @@ declare module 'webuum' {
 		partConnectedCallback?(name: string, element: Element): void;
 		/** Called when a matching part is removed from the host. */
 		partDisconnectedCallback?(name: string, element: Element): void;
+	}
+}
+
+declare module 'webuum' {
+	export interface WebuumElement {
+		/** Called by `defineIntersectionObserver` on each observed change. */
+		intersect?(entry: IntersectionObserverEntry): void;
 	}
 }
 

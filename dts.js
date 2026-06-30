@@ -8,6 +8,7 @@ await createBundle({
   output,
   modules: {
     'webuum': 'index.js',
+    'webuum/observers': 'src/observers/index.js',
     'webuum/supports': 'src/supports.js',
     'webuum/utils': 'src/utils.js',
   },
@@ -26,6 +27,13 @@ const augmentation = `declare module 'webuum' {
 \t\tpartConnectedCallback?(name: string, element: Element): void;
 \t\t/** Called when a matching part is removed from the host. */
 \t\tpartDisconnectedCallback?(name: string, element: Element): void;
+\t}
+}
+
+declare module 'webuum' {
+\texport interface WebuumElement {
+\t\t/** Called by \`defineIntersectionObserver\` on each observed change. */
+\t\tintersect?(entry: IntersectionObserverEntry): void;
 \t}
 }
 
