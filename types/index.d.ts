@@ -13,7 +13,7 @@ declare module 'webuum' {
 }
 
 declare module 'webuum/elements' {
-	export function WebuumLazyElement(Element: CustomElementConstructor): {};
+	export function WebuumLazyElement<T extends CustomElementConstructor>(Element: T): T;
 
 	export {};
 }
@@ -65,7 +65,7 @@ declare module 'webuum' {
 declare module 'webuum' {
 	export interface WebuumElement {
 		/** Called by `defineIntersectionObserver` on each observed change. */
-		intersect?(entry: IntersectionObserverEntry): void;
+		intersectCallback?(entry: IntersectionObserverEntry): void;
 	}
 }
 

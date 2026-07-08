@@ -34,7 +34,7 @@ const augmentation = `declare module 'webuum' {
 declare module 'webuum' {
 \texport interface WebuumElement {
 \t\t/** Called by \`defineIntersectionObserver\` on each observed change. */
-\t\tintersect?(entry: IntersectionObserverEntry): void;
+\t\tintersectCallback?(entry: IntersectionObserverEntry): void;
 \t}
 }
 

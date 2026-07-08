@@ -1,6 +1,6 @@
 /**
  * Observe `host` with an `IntersectionObserver` and forward each change to an
- * `intersect(entry)` method on the host (branch on `entry.isIntersecting`).
+ * `intersectCallback(entry)` method on the host (branch on `entry.isIntersecting`).
  * Disconnects on `$signal` abort.
  *
  * @param {HTMLElement} host
@@ -9,7 +9,7 @@
  */
 export const defineIntersectionObserver = (host, options = {}) => {
   const observer = new IntersectionObserver((entries) => {
-    for (const entry of entries) host.intersect?.(entry)
+    for (const entry of entries) host.intersectCallback?.(entry)
   }, options)
 
   observer.observe(host)

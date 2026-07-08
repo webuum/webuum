@@ -2,7 +2,9 @@ import { defineElement } from 'webuum'
 import { defineIntersectionObserver } from 'webuum/observers'
 
 /**
- * @param {CustomElementConstructor} Element
+ * @template {CustomElementConstructor} T
+ * @param {T} Element
+ * @returns {T}
  */
 export const WebuumLazyElement = Element =>
 /**
