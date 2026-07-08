@@ -66,6 +66,10 @@ declare module 'webuum' {
 	export interface WebuumElement {
 		/** Called by `defineIntersectionObserver` on each observed change. */
 		intersectCallback?(entry: IntersectionObserverEntry): void;
+		/** When truthy, `WebuumLazyElement` defers `lazyCallback` until the element intersects the viewport. Reset to `false` after it runs. */
+		$lazy?: boolean;
+		/** Called by `WebuumLazyElement` to run deferred initialization. */
+		lazyCallback?(): void;
 	}
 }
 
