@@ -9,6 +9,7 @@
 		"defineSignal",
 		"defineElement",
 		"WebuumElement",
+		"WebuumLazyElement",
 		"defineIntersectionObserver",
 		"supportsCommand",
 		"supportsInterest",
@@ -22,6 +23,7 @@
 	],
 	"sources": [
 		"../index.js",
+		"../src/elements/lazy.js",
 		"../src/observers/intersection.js",
 		"../src/supports.js",
 		"../src/utils.js"
@@ -30,8 +32,9 @@
 		null,
 		null,
 		null,
+		null,
 		null
 	],
-	"mappings": ";iBAcaA,aAAaA;iBAmBbC,WAAWA;iBAuBXC,cAAcA;iBAoBdC,WAAWA;iBAuBXC,YAAYA;iBAcZC,aAAaA;cAUbC,aAAaA;;;;;;;;iBClHbC,0BAA0BA;;;;;;cCN1BC,eAAeA;;cAMfC,gBAAgBA;iBAQhBC,UAAUA;;;;;;iBCbVC,QAAQA;iBAkBRC,YAAYA;iBAUZC,eAAeA;iBAUfC,aAAaA;iBAgCbC,qBAAqBA;;;;iBAuBrBC,uBAAuBA",
+	"mappings": ";iBAcaA,aAAaA;iBAmBbC,WAAWA;iBAuBXC,cAAcA;iBAoBdC,WAAWA;iBAuBXC,YAAYA;iBAcZC,aAAaA;cAUbC,aAAaA;;;;;;;;iBCrHbC,iBAAiBA;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;iBCGjBC,0BAA0BA;;;;;;cCN1BC,eAAeA;;cAMfC,gBAAgBA;iBAQhBC,UAAUA;;;;;;iBCbVC,QAAQA;iBAkBRC,YAAYA;iBAUZC,eAAeA;iBAUfC,aAAaA;iBAgCbC,qBAAqBA;;;;iBAuBrBC,uBAAuBA",
 	"ignoreList": []
 }

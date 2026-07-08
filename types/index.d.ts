@@ -12,6 +12,12 @@ declare module 'webuum' {
 	export {};
 }
 
+declare module 'webuum/elements' {
+	export function WebuumLazyElement(Element: CustomElementConstructor): {};
+
+	export {};
+}
+
 declare module 'webuum/observers' {
 	export function defineIntersectionObserver(host: HTMLElement, options?: IntersectionObserverInit): IntersectionObserver;
 

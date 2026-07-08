@@ -8,6 +8,7 @@ await createBundle({
   output,
   modules: {
     'webuum': 'index.js',
+    'webuum/elements': 'src/elements/index.js',
     'webuum/observers': 'src/observers/index.js',
     'webuum/supports': 'src/supports.js',
     'webuum/utils': 'src/utils.js',
